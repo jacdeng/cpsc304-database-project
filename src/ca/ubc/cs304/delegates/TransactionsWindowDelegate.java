@@ -11,7 +11,7 @@ import ca.ubc.cs304.model.BranchModel;
  * TerminalTransactions calls the methods that we have listed below but 
  * Bank is the actual class that will implement the methods.
  */
-public interface TerminalTransactionsDelegate {
+public interface TransactionsWindowDelegate {
 	public void databaseSetup();
 	
 	public void deleteBranch(int branchId);

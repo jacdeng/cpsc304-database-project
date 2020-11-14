@@ -2,19 +2,19 @@ package ca.ubc.cs304.controller;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
-import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
+import ca.ubc.cs304.delegates.TransactionsWindowDelegate;
 import ca.ubc.cs304.model.BranchModel;
 import ca.ubc.cs304.ui.LoginWindow;
-import ca.ubc.cs304.ui.TerminalTransactions;
+import ca.ubc.cs304.ui.TransactionsWindow;
 
 /**
  * This is the main controller class that will orchestrate everything.
  */
-public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
+public class FootballLeague implements LoginWindowDelegate, TransactionsWindowDelegate {
 	private DatabaseConnectionHandler dbHandler = null;
 	private LoginWindow loginWindow = null;
 
-	public Bank() {
+	public FootballLeague() {
 		dbHandler = new DatabaseConnectionHandler();
 	}
 
@@ -35,7 +35,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 			// Once connected, remove login window and start text transaction flow
 			loginWindow.dispose();
 
-			TerminalTransactions transaction = new TerminalTransactions();
+			TransactionsWindow transaction = new TransactionsWindow();
 			transaction.setupDatabase(this);
 			transaction.showMainMenu(this);
 		} else {
@@ -135,7 +135,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 	 * Main method called at launch time
 	 */
 	public static void main(String args[]) {
-		Bank bank = new Bank();
-		bank.start();
+		FootballLeague footballLeague = new FootballLeague();
+		footballLeague.start();
 	}
 }

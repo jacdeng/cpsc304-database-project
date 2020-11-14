@@ -4,29 +4,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
+import ca.ubc.cs304.delegates.TransactionsWindowDelegate;
 import ca.ubc.cs304.model.BranchModel;
 
 /**
  * The class is only responsible for handling terminal text inputs. 
  */
-public class TerminalTransactions {
+public class TransactionsWindow {
 	private static final String EXCEPTION_TAG = "[EXCEPTION]";
 	private static final String WARNING_TAG = "[WARNING]";
 	private static final int INVALID_INPUT = Integer.MIN_VALUE;
 	private static final int EMPTY_INPUT = 0;
 	
 	private BufferedReader bufferedReader = null;
-	private TerminalTransactionsDelegate delegate = null;
+	private TransactionsWindowDelegate delegate = null;
 
-	public TerminalTransactions() {
+	public TransactionsWindow() {
 	}
 	
 	/**
 	 * Sets up the database to have a branch table with two tuples so we can insert/update/delete from it.
 	 * Refer to the databaseSetup.sql file to determine what tuples are going to be in the table.
 	 */
-	public void setupDatabase(TerminalTransactionsDelegate delegate) {
+	public void setupDatabase(TransactionsWindowDelegate delegate) {
 		this.delegate = delegate;
 		
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -56,7 +56,7 @@ public class TerminalTransactions {
 	/**
 	 * Displays simple text interface
 	 */ 
-	public void showMainMenu(TerminalTransactionsDelegate delegate) {
+	public void showMainMenu(TransactionsWindowDelegate delegate) {
 		this.delegate = delegate;
 		
 	    bufferedReader = new BufferedReader(new InputStreamReader(System.in));

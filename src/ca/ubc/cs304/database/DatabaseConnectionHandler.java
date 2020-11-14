@@ -1,5 +1,6 @@
 package ca.ubc.cs304.database;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+
 import ca.ubc.cs304.model.BranchModel;
+import ca.ubc.cs304.utils.ScriptRunner;
 
 /**
  * This class handles all database related transactions
@@ -170,16 +173,24 @@ public class DatabaseConnectionHandler {
 		dropBranchTableIfExists();
 		
 		try {
-			Statement stmt = connection.createStatement();
-			stmt.executeUpdate("CREATE TABLE branch (branch_id integer PRIMARY KEY, branch_name varchar2(20) not null, branch_addr varchar2(50), branch_city varchar2(20) not null, branch_phone integer)");
-			stmt.close();
-		} catch (SQLException e) {
+			// creating script runner object with current connection
+			ScriptRunner sr = new ScriptRunner(connection, connection.getAutoCommit(), true);
+			// creating reader object
+			Reader reader = new BufferedReader(new FileReader("src/ca/ubc/cs304/sql/scripts/databaseSetup.sql"));
+			sr.runScript(reader);
+//			Statement stmt = connection.createStatement();
+//			stmt.executeUpdate("CREATE TABLE branch (branch_id integer PRIMARY KEY, branch_name varchar2(20) not null, branch_addr varchar2(50), branch_city varchar2(20) not null, branch_phone integer)");
+//			stmt.close();
+		} catch (SQLException | FileNotFoundException e) {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		} catch (IOException e) {
+			// catch exception from runScript
+			e.printStackTrace();
 		}
-		
+
 		BranchModel branch1 = new BranchModel("123 Charming Ave", "Vancouver", 1, "First Branch", 1234567);
 		insertBranch(branch1);
-		
+
 		BranchModel branch2 = new BranchModel("123 Coco Ave", "Vancouver", 2, "Second Branch", 1234568);
 		insertBranch(branch2);
 	}
