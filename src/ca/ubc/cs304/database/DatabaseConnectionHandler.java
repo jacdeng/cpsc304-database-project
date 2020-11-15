@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 
 import ca.ubc.cs304.model.BranchModel;
+import ca.ubc.cs304.model.TeamModel;
 import ca.ubc.cs304.utils.ScriptRunner;
 
 /**
@@ -87,7 +88,31 @@ public class DatabaseConnectionHandler {
 			rollbackConnection();
 		}
 	}
-	
+
+	public void insertTeam(TeamModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Team_HasManages VALUES (?,?,?,?,?,?,?,?,?)");
+			ps.setInt(1, model.getPhoneNum());
+			ps.setString(2, model.getWebsite());
+			ps.setString(3, model.getTeamName());
+			ps.setInt(4, model.getTeamID());
+
+			ps.setString(5, model.getSince());
+			ps.setString(6, model.getArenaName());
+
+			ps.setString(7,model.getContractStart());
+			ps.setString(8, model.getContractEnd());
+			ps.setInt(9, model.getCoachLicenseNum());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
 	public BranchModel[] getBranchInfo() {
 		ArrayList<BranchModel> result = new ArrayList<BranchModel>();
 		
