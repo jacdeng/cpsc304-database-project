@@ -10,8 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-import ca.ubc.cs304.model.BranchModel;
-import ca.ubc.cs304.model.TeamModel;
+import ca.ubc.cs304.model.*;
 import ca.ubc.cs304.utils.ScriptRunner;
 
 /**
@@ -47,6 +46,10 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
+	/**
+	 * START OF DELETION HANDLER METHODS
+	 */
+
 	public void deleteBranch(int branchId) {
 		try {
 			PreparedStatement ps = connection.prepareStatement("DELETE FROM branch WHERE branch_id = ?");
@@ -65,6 +68,50 @@ public class DatabaseConnectionHandler {
 			rollbackConnection();
 		}
 	}
+
+	public void deleteTeam(int teamId) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Team_HasManages WHERE teamID = ?");
+			ps.setInt(1, teamId);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Team " + teamId + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteArena(int name) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Arena WHERE name = ?");
+			ps.setInt(1, name);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + name + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	//TODO: FINISH UP THE DELETE FUNCTIONS FOR ALL THE TABLES!
+
+	/**
+	 * END OF DELETION HANDLER METHODS
+	 *
+	 * START OF INSERT HANDLER METHODS
+	 */
 	
 	public void insertBranch(BranchModel model) {
 		try {
@@ -113,6 +160,246 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
+	public void insertArena(ArenaModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Arena VALUES (?,?,?,?)");
+			ps.setString(1, model.getAddress());
+			ps.setString(2, model.getSurfaceType());
+			ps.setInt(3, model.getCapacity());
+			ps.setString(4, model.getName());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertArena1(Arena1Model model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Arena1 VALUES (?,?)");
+			ps.setString(1, model.getCity());
+			ps.setString(2, model.getAddress());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertCoach(CoachModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Coach VALUES (?,?,?,?)");
+			ps.setString(1, model.getNationality());
+			ps.setString(2, model.getFirstName());
+			ps.setString(3, model.getLastName());
+			ps.setInt(4, model.getLicenseNum());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertDoctor(DoctorModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Doctor_Treat VALUES (?,?,?,?,?,?,?)");
+			ps.setString(1, model.getFirstName());
+			ps.setString(2, model.getLastName());
+			ps.setString(3, model.getFieldOfPractice());
+			ps.setInt(4, model.getLicenseNum());
+
+			ps.setString(5, model.getStartDate());
+			ps.setString(6, model.getEndDate());
+			ps.setInt(7,model.getTeamID());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertMatch(MatchModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Match VALUES (?,?,?,?,?)");
+			ps.setString(1, model.getHomeTeam());
+			ps.setString(2, model.getAwayTeam());
+			ps.setString(3, model.getScore());
+			ps.setString(4, model.getDate());
+			ps.setInt(5, model.getMatchID());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertMatch1(Match1Model model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Match1 VALUES (?,?)");
+			ps.setString(1, model.getArena());
+			ps.setString(2, model.getHomeTeam());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertPlays(PlaysModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Plays VALUES (?,?)");
+			ps.setInt(1, model.getMatchID());
+			ps.setInt(2, model.getTeamID());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertReferee(RefereeModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Referee VALUES (?,?,?,?)");
+			ps.setString(1, model.getCity());
+			ps.setString(2, model.getFirstName());
+			ps.setString(3,model.getLastName());
+			ps.setInt(4, model.getLicenseNum());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertReferees(RefereesModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Referees VALUES (?,?,?,?)");
+			ps.setInt(1, model.getLicenseNum());
+			ps.setInt(2, model.getMatchID());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertFootballPlayers(FootballPlayerModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO FootballPlayer_PlaysFor VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			ps.setInt(1, model.getJerseyNum());
+			ps.setString(2, model.getFirstName());
+			ps.setString(3, model.getLastName());
+			ps.setString(4, model.getNationality());
+			ps.setString(5, model.getDateOfBirth());
+
+			ps.setInt(6, model.getGoalsConceded());
+			ps.setInt(7, model.getGoalsSaved());
+			ps.setInt(8, model.getBigChances());
+			ps.setInt(9, model.getKeyPasses());
+			ps.setInt(10, model.getInterceptions());
+			ps.setInt(11, model.getRecoveries());
+			ps.setInt(12, model.getSuccessfulTackles());
+			ps.setInt(13, model.getBlocks());
+			ps.setInt(14, model.getClearances());
+
+			ps.setInt(15, model.getLicenseNum());
+
+			ps.setString(16, model.getContractStart());
+			ps.setString(17, model.getContractEnd());
+			ps.setInt(18, model.getTeamID());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertStatsHas(StatsHasModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Stats_Has VALUES (?,?,?)");
+			ps.setInt(1, model.getAmount());
+			ps.setString(2, model.getType());
+			ps.setInt(3, model.getLicenseNum());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertPenaltyRecieves(PenaltyRecievesModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Penalty_Receives VALUES (?,?,?,?,?)");
+			ps.setInt(1, model.getTimestamp());
+			ps.setString(2, model.getType());
+			ps.setString(3, model.getCard());
+			ps.setInt(4, model.getDuration());
+			ps.setInt(5, model.getLicenseNum());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void insertInjuryHas(InjuryHasModel model) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Injury_Has VALUES (?,?,?)");
+			ps.setInt(1, model.getTimeStamp());
+			ps.setString(2, model.getType());
+			ps.setInt(3, model.getLicenseNum());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+	/**
+	 * END OF INSERTION HANDLER METHODS
+	 *
+	 * START OF GET INFO QUERY HANDLER METHODS
+	 */
+
+
 	public BranchModel[] getBranchInfo() {
 		ArrayList<BranchModel> result = new ArrayList<BranchModel>();
 		
@@ -148,7 +435,15 @@ public class DatabaseConnectionHandler {
 		
 		return result.toArray(new BranchModel[result.size()]);
 	}
-	
+
+	//TODO: NEED TO FIGURE OUT HOW TO SELECT AND PROJECTION SPECIFIC QUERIES? LETS FIGURE OUT HOW TO DO THIS SOON!
+
+	/**
+	 * END OF THE GET INFO QUERY HANDLERS
+	 *
+	 * START OF THE UPDATE HANDLER METHODS
+	 */
+
 	public void updateBranch(int id, String name) {
 		try {
 		  PreparedStatement ps = connection.prepareStatement("UPDATE branch SET branch_name = ? WHERE branch_id = ?");
@@ -168,6 +463,12 @@ public class DatabaseConnectionHandler {
 			rollbackConnection();
 		}	
 	}
+
+	//TODO: NEED TO DO A LOT MORE UPDATE METHODS!!! LETS FIGURE OUT A WAY TO DO THIS EFFICIENTLY SINCE WE HAVE SO MANY ATTRIBUTES?
+
+	/**
+	 * END OF THE UPDATE HANDLER METHODS
+	 */
 	
 	public boolean login(String username, String password) {
 		try {
