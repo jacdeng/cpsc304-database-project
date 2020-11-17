@@ -105,6 +105,224 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
+
+	public void deleteArena1 (String address){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM arena1 WHERE name = ?");
+			ps.setString(1, address);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + address + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteCoach (int licencenum){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM coach WHERE name = ?");
+			ps.setInt(1, licencenum);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteDoctor (int licencenum){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM doctor WHERE name = ?");
+			ps.setInt(1, licencenum);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteMatch (int matchID){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM match WHERE name = ?");
+			ps.setInt(1, matchID);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + matchID + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteMatch1 (String homeTeam){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM match1 WHERE name = ?");
+			ps.setString(1, homeTeam);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + homeTeam + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deletePlays (int matchID){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM plays WHERE name = ?");
+			ps.setInt(1, matchID);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + matchID + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteReferee (int licencenum){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM referee WHERE name = ?");
+			ps.setInt(1, licencenum);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteReferees (int licencenum){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM referees WHERE name = ?");
+			ps.setInt(1, licencenum);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteFootballPlayer (int licencenum){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM FootballPlayer_PlaysFor WHERE name = ?");
+			ps.setInt(1, licencenum);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deletestatHas (int licencenum){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Stats_Has WHERE name = ?");
+			ps.setInt(1, licencenum);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deletePenalty (int licencenum){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Penalty_Recieves WHERE name = ?");
+			ps.setInt(1, licencenum);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteInjury (int licencenum){
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Injury_Has WHERE name = ?");
+			ps.setInt(1, licencenum);
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+
 	//TODO: FINISH UP THE DELETE FUNCTIONS FOR ALL THE TABLES!
 
 	/**
