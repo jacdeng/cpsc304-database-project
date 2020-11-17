@@ -1,14 +1,14 @@
 CREATE TABLE FootballPlayer_PlaysFor (
     jerseyNum int NOT NUll, 
-    firstName Char (50) NOT NUll, 
-    lastName Char(30) NOT NUll,
+    firstName char (50) NOT NUll,
+    lastName char(30) NOT NUll,
     nationality char(50) NOT NULL,
     dateOfBirth char(8) NOT NULL, 
 
     goalsConceded int, 
     goalsSaves int,
     bigChances int, 
-    keypasses int, 
+    keyPasses int,
     interceptions int, 
     recoveries int, 
     successfulTackles int, 
@@ -29,7 +29,7 @@ CREATE TABLE Team_HasManages(
     teamID char(50), 
 
     since char (8) NOT NULL, 
-    name char(50) NOT NUll, 
+    arenaName char(50) NOT NUll,
 
     contractStart char(8) NOT NULL, 
     contractEnd char(8) NOT NULL, 
@@ -46,20 +46,20 @@ CREATE TABLE Arena(
 ); 
 
 CREATE TABLE Arena1 (
-    city Char(20) NOT NULL, 
+    city char(20) NOT NULL,
     address char(100) PRIMARY KEY, 
     FOREIGN KEY (address) REFERENCES Arena
 ); 
 
 CREATE TABLE Coach (
-    nationality Char(20) NOT NULL,
-    firstName Char(50) NOT NULL, 
-    lastName Char(50) NOT NULL,
+    nationality char(20) NOT NULL,
+    firstName char(50) NOT NULL,
+    lastName char(50) NOT NULL,
     licenceNum int PRIMARY KEY
 ); 
 
 CREATE TABLE Doctor_Treat (
-    firstname Char(50) NOT NULL, 
+    firstname char(50) NOT NULL,
     lastName char (50) NOT NULL, 
     fieldOfPractice char(50) NOT NULL, 
     licenceNum int PRIMARY KEY, 
@@ -68,7 +68,7 @@ CREATE TABLE Doctor_Treat (
     teamID int 
 ); 
 
-CREATE TABLE match(
+CREATE TABLE Match(
     homeTeam char(50) not null, 
     awayTeam char(50) not null, 
     score char(8) not null, 
@@ -76,7 +76,7 @@ CREATE TABLE match(
     matchID int PRIMARY KEY 
 ); 
 
-CREATE TABLE match2 (
+CREATE TABLE Match1 (
     arena char(50) NOT NULL , 
     homeTeam char(50) PRIMARY KEY
 
@@ -84,7 +84,7 @@ CREATE TABLE match2 (
 );
 
 
-CREATE TABLE plays (
+CREATE TABLE Plays (
     matchID int not null PRIMARY KEY, 
     teamID int PRIMARY KEY
     FOREIGN KEY (matchID) REFERENCES Match,
@@ -95,12 +95,12 @@ CREATE TABLE plays (
 CREATE TABLE Referee (
     licenceNum int, 
     city char (50),
-    firstName Char(50) NOT NULL, 
-    lastName Char(50) NOT NULL,
+    firstName char(50) NOT NULL,
+    lastName char(50) NOT NULL,
     
 ); 
 
-CREATE TABLE referees (
+CREATE TABLE Referees (
     licenceNum int, 
     matchID int NOT NULL
 );
@@ -112,10 +112,10 @@ CREATE TABLE Stats_Has (
 ); 
 
 CREATE TABLE Penalty_Receives (
-    Timestamp int, 
-    Type char(30) NOT NULL,
-    Card char (8),
-    Duration, int not null, 
+    timestamp int,
+    type char(30) NOT NULL,
+    card char (8),
+    duration, int NOT NULL,
     licenceNum int PRIMARY KEY
 
 );

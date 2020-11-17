@@ -108,11 +108,11 @@ public class DatabaseConnectionHandler {
 
 	public void deleteArena1 (String address){
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM arena1 WHERE name = ?");
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Arena1 WHERE address = ?");
 			ps.setString(1, address);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + address + " does not exist!");
+				System.out.println(WARNING_TAG + " Arena with address " + address + " does not exist!");
 			}
 
 			connection.commit();
@@ -124,13 +124,13 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
-	public void deleteCoach (int licencenum){
+	public void deleteCoach (int licenseNum){
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM coach WHERE name = ?");
-			ps.setInt(1, licencenum);
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Coach WHERE licenseNum = ?");
+			ps.setInt(1, licenseNum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+				System.out.println(WARNING_TAG + " Coach " + licenseNum + " does not exist!");
 			}
 
 			connection.commit();
@@ -142,13 +142,13 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
-	public void deleteDoctor (int licencenum){
+	public void deleteDoctor (int licenseNum){
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM doctor WHERE name = ?");
-			ps.setInt(1, licencenum);
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Doctor WHERE licenseNum = ?");
+			ps.setInt(1, licenseNum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+				System.out.println(WARNING_TAG + " Doctor " + licenseNum + " does not exist!");
 			}
 
 			connection.commit();
@@ -162,11 +162,11 @@ public class DatabaseConnectionHandler {
 
 	public void deleteMatch (int matchID){
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM match WHERE name = ?");
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Match WHERE matchID = ?");
 			ps.setInt(1, matchID);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + matchID + " does not exist!");
+				System.out.println(WARNING_TAG + " Match " + matchID + " does not exist!");
 			}
 
 			connection.commit();
@@ -180,11 +180,11 @@ public class DatabaseConnectionHandler {
 
 	public void deleteMatch1 (String homeTeam){
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM match1 WHERE name = ?");
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Match1 WHERE homeTeam = ?");
 			ps.setString(1, homeTeam);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + homeTeam + " does not exist!");
+				System.out.println(WARNING_TAG + " Arena with home team " + homeTeam + " does not exist!");
 			}
 
 			connection.commit();
@@ -198,7 +198,7 @@ public class DatabaseConnectionHandler {
 
 	public void deletePlays (int matchID){
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM plays WHERE name = ?");
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Plays WHERE matchID = ?");
 			ps.setInt(1, matchID);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
@@ -681,6 +681,167 @@ public class DatabaseConnectionHandler {
 			rollbackConnection();
 		}	
 	}
+
+	public void updateTeam(int phoneNum, String website, String teamName, int teamID, String since, String arenaName, String contractStart, String contractEnd, int coachLicenseNum) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("UPDATE Team_HasManages SET phoneNum = ?,website = ?,teamName = ?,teamID = ?,since = ?,arenaName = ?,contractStart = ?,contractEnd = ?,licenseNum = ? WHERE teamID = ?");
+			ps.setInt(1, phoneNum);
+			ps.setString(2, website);
+			ps.setString(3, teamName);
+			ps.setInt(4, teamID);
+
+			ps.setString(5, since);
+			ps.setString(6, arenaName);
+
+			ps.setString(7,contractStart);
+			ps.setString(8, contractEnd);
+			ps.setInt(9, coachLicenseNum);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Team " + teamID + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void updateCoach(String nationality, String firstName, String lastName, int licenseNum) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("UPDATE Coach SET nationality = ?,firstName = ?,lastName = ?,licenseNum = ? WHERE licenseNum = ?");
+			ps.setString(1, nationality);
+			ps.setString(2, firstName);
+			ps.setString(3, lastName);
+			ps.setInt(4, licenseNum);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Coach " + licenseNum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void updateDoctor(String firstName, String lastName, String fieldOfPractice, int licenseNum, String startDate, String endDate, int teamID) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("UPDATE Doctor_Treat SET firstName = ?,lastName = ?,fieldOfPractice = ?,licenseNum = ?,startDate = ?,endDate = ?,teamID = ? WHERE licenseNum = ?");
+			ps.setString(1, firstName);
+			ps.setString(2, lastName);
+			ps.setString(3, fieldOfPractice);
+			ps.setInt(4, licenseNum);
+
+			ps.setString(5, startDate);
+			ps.setString(6, endDate);
+			ps.setInt(7, teamID);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Doctor " + licenseNum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void updateMatch(String homeTeam, String awayTeam, String score, String date, int matchID) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("UPDATE Match SET homeTeam = ?,awayTeam = ?,score = ?,date = ?,matchID = ? WHERE matchID = ?");
+			ps.setString(1, homeTeam);
+			ps.setString(2, awayTeam);
+			ps.setString(3, score);
+			ps.setString(4, date);
+			ps.setInt(5, matchID);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Match " + matchID + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void updateMatch1(String arena, String homeTeam) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("UPDATE Match1 SET arena = ?,homeTeam = ? WHERE homeTeam = ?");
+			ps.setString(1, arena);
+			ps.setString(2, homeTeam);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Match with home team " + homeTeam + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void updateFootballPlayer(int jerseyNum, String firstName, String lastName, String nationality, String dateOfBirth, int goalsConceded, int goalsSaved, int bigChances, int keyPasses, int interceptions, int recoveries, int successfulTackles, int blocks, int clearances, int licenseNum, String contractStart, String contractEnd, int teamID) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET jerseyNum = ?,firstName = ?,lastName = ?,nationality = ?,dateOfBirth = ?,goalsConceded = ?,goalsSaved = ?,bigChances = ?,keyPasses = ?,interceptions = ?,recoveries = ?,successfulTackles = ?,blocks = ?,clearances = ?,licenseNum = ?,contractStart = ?,contractEnd = ?,teamID = ? WHERE licenseNum = ?");
+			ps.setInt(1, jerseyNum);
+			ps.setString(2, firstName);
+			ps.setString(3, lastName);
+			ps.setString(4, nationality);
+			ps.setString(5, dateOfBirth);
+
+			ps.setInt(6, goalsConceded);
+			ps.setInt(7, goalsSaved);
+			ps.setInt(8, bigChances);
+			ps.setInt(9, keyPasses);
+			ps.setInt(10, interceptions);
+			ps.setInt(11, recoveries);
+			ps.setInt(12, successfulTackles);
+			ps.setInt(13, blocks);
+			ps.setInt(14, clearances);
+
+			ps.setInt(15, licenseNum);
+
+			ps.setString(16, contractStart);
+			ps.setString(17, contractEnd);
+			ps.setInt(18, teamID);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Player " + licenseNum + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+
 
 	//TODO: NEED TO DO A LOT MORE UPDATE METHODS!!! LETS FIGURE OUT A WAY TO DO THIS EFFICIENTLY SINCE WE HAVE SO MANY ATTRIBUTES?
 
