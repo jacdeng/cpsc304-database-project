@@ -654,6 +654,346 @@ public class DatabaseConnectionHandler {
 		return result.toArray(new BranchModel[result.size()]);
 	}
 
+	public TeamModel[] getTeamInfo(){
+		ArrayList<TeamModel> result = new ArrayList<TeamModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Team_HasManages");
+
+			while(rs.next()) {
+				TeamModel model = new TeamModel(
+						rs.getString("Team_HasManages_teamName"),
+						rs.getInt("Team_HasManages_teamID"),
+						rs.getString("Team_HasManages_website"),
+						rs.getInt("Team_HasManages_phoneNum"),
+						rs.getString("Team_HasManages_since"),
+						rs.getString("Team_HasManages_arenaName"),
+						rs.getString("Team_HasManages_contractStart"),
+						rs.getString("Team_HasManages_contractEnd"),
+						rs.getInt("Team_HasManages_licenseNum")
+				);
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new TeamModel[result.size()]);
+	}
+
+	public ArenaModel[] getArenaInfo(){
+		ArrayList<ArenaModel> result = new ArrayList<ArenaModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Arena");
+
+			while(rs.next()) {
+				ArenaModel model = new ArenaModel(
+						rs.getString("Arena_address"),
+						rs.getString("Arena_surfaceType"),
+						rs.getInt("Arena_capacity"),
+						rs.getString("Arena_name"));
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new ArenaModel[result.size()]);
+	}
+
+	public Arena1Model[] getArena1Info(){
+		ArrayList<Arena1Model> result = new ArrayList<Arena1Model>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Arena1");
+
+			while(rs.next()) {
+				Arena1Model model = new Arena1Model(
+						rs.getString("Arena1_address"),
+						rs.getString("Arena1_city"));
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new Arena1Model[result.size()]);
+	}
+
+	public CoachModel[] getCoachInfo(){
+		ArrayList<CoachModel> result = new ArrayList<CoachModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Coach");
+
+			while(rs.next()) {
+				CoachModel model = new CoachModel(
+						rs.getString("Coach_nationality"),
+						rs.getString("Coach_firstName"),
+						rs.getString("Coach_lastName"),
+						rs.getInt("Coach_licenseNum")
+						);
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new CoachModel[result.size()]);
+	}
+
+	public DoctorModel[] getDoctorInfo(){
+		ArrayList<DoctorModel> result = new ArrayList<DoctorModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Doctor_Treat");
+
+			while(rs.next()) {
+				DoctorModel model = new DoctorModel(
+						rs.getString("Doctor_Treat_firstName"),
+						rs.getString("Doctor_Treat_lastName"),
+						rs.getString("Doctor_Treat_fieldOfPractice"),
+						rs.getInt("Doctor_Treat_licenseNum"),
+						rs.getString("Doctor_Treat_startDate"),
+						rs.getString("Doctor_Treat_endDate"),
+						rs.getInt("Doctor_Treat_teamID")
+				);
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new DoctorModel[result.size()]);
+	}
+
+	public MatchModel[] getMatchInfo(){
+		ArrayList<MatchModel> result = new ArrayList<MatchModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Match");
+
+			while(rs.next()) {
+				MatchModel model = new MatchModel(
+						rs.getString("Match_homeTeam"),
+						rs.getString("Match_awayTeam"),
+						rs.getString("Match_score"),
+						rs.getString("Match_date"),
+						rs.getInt("Match_matchID")
+						);
+				result.add(model);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+		return result.toArray(new MatchModel[result.size()]);
+	}
+
+	public Match1Model[] getMatch1Info(){
+		ArrayList<Match1Model> result = new ArrayList<Match1Model>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Match1");
+
+			while(rs.next()) {
+				Match1Model model = new Match1Model(
+						rs.getString("Match1_arena"),
+						rs.getString("Match1_homeTeam")
+				);
+				result.add(model);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+		return result.toArray(new Match1Model[result.size()]);
+	}
+
+	public PlaysModel[] getPlaysInfo(){
+		ArrayList<PlaysModel> result = new ArrayList<PlaysModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Plays");
+
+			while(rs.next()) {
+				PlaysModel model = new PlaysModel(
+						rs.getInt("Plays_matchID"),
+						rs.getInt("Plays_teamID")
+				);
+				result.add(model);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+		return result.toArray(new PlaysModel[result.size()]);
+	}
+
+	public RefereeModel[] getRefereeInfo(){
+		ArrayList<RefereeModel> result = new ArrayList<RefereeModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Referee");
+
+			while(rs.next()) {
+				RefereeModel model = new RefereeModel(
+						rs.getString("Plays_city"),
+						rs.getString("Plays_firstName"),
+						rs.getString("Plays_lastName"),
+						rs.getInt("Plays_licenseNum")
+						);
+				result.add(model);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+		return result.toArray(new RefereeModel[result.size()]);
+	}
+
+	public RefereesModel[] getRefereesInfo(){
+		ArrayList<RefereesModel> result = new ArrayList<RefereesModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Referees");
+
+			while(rs.next()) {
+				RefereesModel model = new RefereesModel(
+						rs.getInt("Plays_matchID"),
+						rs.getInt("Plays_licenseNum")
+				);
+				result.add(model);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new RefereesModel[result.size()]);
+	}
+
+	public FootballPlayerModel[] getFootballPlayerInfo(){
+		ArrayList<FootballPlayerModel> result = new ArrayList<FootballPlayerModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM FootballPlayer_PlaysFor");
+
+			while(rs.next()) {
+				FootballPlayerModel model = new FootballPlayerModel(
+						rs.getInt("FootballPLayer_PlaysFor_licenseNum"),
+						rs.getInt("FootballPLayer_PlaysFor_jerseyNum"),
+						rs.getString("FootballPlayer_PlaysFor_firstName"),
+						rs.getString("FootballPlayer_PlaysFor_lastName"),
+						rs.getString("FootballPlayer_PlaysFor_nationality"),
+						rs.getString("FootballPlayer_PlaysFor_dateOfBirth"),
+						rs.getInt("FootballPlayer_PlaysFor_goalsConcede"),
+						rs.getInt("FootballPlayer_PlaysFor_goalsSaved"),
+						rs.getInt("FootballPlayer_PlaysFor_bigChances"),
+						rs.getInt("FootballPlayer_PlaysFor_keyPasses"),
+						rs.getInt("FootballPlayer_PlaysFor_interceptions"),
+						rs.getInt("FootballPlayer_PlaysFor_recoveries"),
+						rs.getInt("FootballPlayer_PlaysFor_successfulTackles"),
+						rs.getInt("FootballPlayer_PlaysFor_blocks"),
+						rs.getInt("FootballPlayer_PlaysFor_clearances"),
+						rs.getString("FootballPlayer_PlaysFor_contractStart"),
+						rs.getString("FootballPlayer_PlaysFor_contractEnd"),
+						rs.getInt("FootballPlayer_PlaysFor_teamID")
+						);
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new FootballPlayerModel[result.size()]);
+	}
+
+	public StatsHasModel[] getStatsHasInfo(){
+		ArrayList<StatsHasModel> result = new ArrayList<StatsHasModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Stats_Has");
+
+			while(rs.next()) {
+				StatsHasModel model = new StatsHasModel(
+						rs.getString("Stats_Has_type"),
+						rs.getInt("Stats_Has_amount"),
+						rs.getInt("Stats_Has_licenseNum")
+				);
+				result.add(model);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new StatsHasModel[result.size()]);
+	}
+
+	public PenaltyRecievesModel[] getPenaltyRecievesInfo(){
+		ArrayList<PenaltyRecievesModel> result = new ArrayList<PenaltyRecievesModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Penalty_Receives");
+
+			while(rs.next()) {
+				PenaltyRecievesModel model = new PenaltyRecievesModel(
+						rs.getString("Penalty_Receives_type"),
+						rs.getString("Penalty_Receives_card"),
+						rs.getInt("Penalty_Receives_duration"),
+						rs.getInt("Penalty_Receives_timeStamp"),
+						rs.getInt("Penalty_Receives_licenseNum")
+						);
+				result.add(model);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new PenaltyRecievesModel[result.size()]);
+	}
+
 	//TODO: NEED TO FIGURE OUT HOW TO SELECT AND PROJECTION SPECIFIC QUERIES? LETS FIGURE OUT HOW TO DO THIS SOON!
 
 	/**
