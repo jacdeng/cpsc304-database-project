@@ -112,7 +112,7 @@ public class DatabaseConnectionHandler {
 			ps.setString(1, address);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena with address " + address + " does not exist!");
+				System.out.println(WARNING_TAG + " Arena1 with address " + address + " does not exist!");
 			}
 
 			connection.commit();
@@ -144,7 +144,7 @@ public class DatabaseConnectionHandler {
 
 	public void deleteDoctor (int licenseNum){
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM Doctor WHERE licenseNum = ?");
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Doctor_Treat WHERE licenseNum = ?");
 			ps.setInt(1, licenseNum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
@@ -184,7 +184,7 @@ public class DatabaseConnectionHandler {
 			ps.setString(1, homeTeam);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena with home team " + homeTeam + " does not exist!");
+				System.out.println(WARNING_TAG + " Match1 with home team " + homeTeam + " does not exist!");
 			}
 
 			connection.commit();
@@ -202,7 +202,7 @@ public class DatabaseConnectionHandler {
 			ps.setInt(1, matchID);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + matchID + " does not exist!");
+				System.out.println(WARNING_TAG + " Plays " + matchID + " does not exist!");
 			}
 
 			connection.commit();
@@ -216,11 +216,11 @@ public class DatabaseConnectionHandler {
 
 	public void deleteReferee (int licencenum){
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM referee WHERE name = ?");
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Referee WHERE name = ?");
 			ps.setInt(1, licencenum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+				System.out.println(WARNING_TAG + " Referee " + licencenum + " does not exist!");
 			}
 
 			connection.commit();
@@ -234,11 +234,11 @@ public class DatabaseConnectionHandler {
 
 	public void deleteReferees (int licencenum){
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM referees WHERE name = ?");
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Referees WHERE name = ?");
 			ps.setInt(1, licencenum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+				System.out.println(WARNING_TAG + " Referees " + licencenum + " does not exist!");
 			}
 
 			connection.commit();
@@ -256,7 +256,7 @@ public class DatabaseConnectionHandler {
 			ps.setInt(1, licencenum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+				System.out.println(WARNING_TAG + " FootballPlayer " + licencenum + " does not exist!");
 			}
 
 			connection.commit();
@@ -268,13 +268,13 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
-	public void deletestatHas (int licencenum){
+	public void deleteStatHas (int licencenum){
 		try {
 			PreparedStatement ps = connection.prepareStatement("DELETE FROM Stats_Has WHERE name = ?");
 			ps.setInt(1, licencenum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+				System.out.println(WARNING_TAG + " Stats_Has with player licensenum: " + licencenum + " does not exist!");
 			}
 
 			connection.commit();
@@ -292,7 +292,7 @@ public class DatabaseConnectionHandler {
 			ps.setInt(1, licencenum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+				System.out.println(WARNING_TAG + " Penalty with player licensenum: " + licencenum + " does not exist!");
 			}
 
 			connection.commit();
@@ -310,7 +310,7 @@ public class DatabaseConnectionHandler {
 			ps.setInt(1, licencenum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Arena " + licencenum + " does not exist!");
+				System.out.println(WARNING_TAG + " Injury with play licencenum: " + licencenum + " does not exist!");
 			}
 
 			connection.commit();
@@ -790,7 +790,7 @@ public class DatabaseConnectionHandler {
 
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Match with home team " + homeTeam + " does not exist!");
+				System.out.println(WARNING_TAG + " Match1 with hometeam " + homeTeam + " does not exist!");
 			}
 
 			connection.commit();
