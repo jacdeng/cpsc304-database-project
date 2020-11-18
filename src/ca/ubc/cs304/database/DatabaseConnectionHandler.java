@@ -994,6 +994,30 @@ public class DatabaseConnectionHandler {
 		return result.toArray(new PenaltyRecievesModel[result.size()]);
 	}
 
+	public InjuryHasModel[] getInjuryHasInfo(){
+		ArrayList<InjuryHasModel> result = new ArrayList<InjuryHasModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Injury_Has");
+
+			while(rs.next()) {
+				InjuryHasModel model = new InjuryHasModel(
+						rs.getString("Injury_Has_type"),
+						rs.getInt("Injury_Has_timeStamp"),
+						rs.getInt("Injury_Has_licenseNum")
+						);
+				result.add(model);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+		return result.toArray(new InjuryHasModel[result.size()]);
+	}
+
 	//TODO: NEED TO FIGURE OUT HOW TO SELECT AND PROJECTION SPECIFIC QUERIES? LETS FIGURE OUT HOW TO DO THIS SOON!
 
 	/**
