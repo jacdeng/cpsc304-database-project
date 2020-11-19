@@ -163,7 +163,37 @@ public class FootballLeague implements LoginWindowDelegate, TransactionsWindowDe
     	dbHandler.updateBranch(branchId, name);
     }
 
-    /**
+	public void updateTeam(int phoneNum, String website, String teamName, int teamID,
+						   String since, String arenaName, String contractStart, String contractEnd, int coachLicenseNum) {
+		dbHandler.updateTeam(phoneNum, website, teamName, teamID,
+				since, arenaName,
+				contractStart, contractEnd, coachLicenseNum);
+	}
+	public void updateCoach(String nationality, String firstName, String lastName, int licenseNum) {
+		dbHandler.updateCoach(nationality, firstName, lastName, licenseNum);
+	}
+	public void updateDoctor(String firstName, String lastName, String fieldOfPractice, int licenseNum, String startDate, String endDate, int teamID) {
+		dbHandler.updateDoctor(firstName, lastName, fieldOfPractice, licenseNum, startDate, endDate, teamID);
+	}
+	public void updateMatch(String homeTeam, String awayTeam, String score, String date, int matchID) {
+		dbHandler.updateMatch(homeTeam, awayTeam, score, date, matchID);
+	}
+	public void updateMatch1(String arena, String homeTeam) {
+		dbHandler.updateMatch1(arena, homeTeam);
+	}
+	public void updateFootballPlayer(int jerseyNum, String firstName, String lastName, String nationality, String dateOfBirth,
+									 int goalsConceded, int goalsSaved,
+									 int bigChances, int keyPasses,
+									 int interceptions, int recoveries,
+									 int successfulTackles, int blocks, int clearances,
+									 int licenseNum, String contractStart, String contractEnd, int teamID){
+    	dbHandler.updateFootballPlayer(jerseyNum, firstName, lastName, nationality, dateOfBirth,
+				goalsConceded, goalsSaved, bigChances, keyPasses, interceptions, recoveries,
+				successfulTackles, blocks, clearances, licenseNum, contractStart, contractEnd, teamID);
+	}
+
+
+	/**
 	 * TermainalTransactionsDelegate Implementation
 	 * 
 	 * Displays information about varies bank branches.
