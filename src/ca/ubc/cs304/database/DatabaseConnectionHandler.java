@@ -52,47 +52,47 @@ public class DatabaseConnectionHandler {
 	 * Input: teamName, TeamID, Phonenumber
 	 * Output: List of teams with the columns teamName, teamID, Phonenumber.
 	 */
-	// Here we are making a new class, this will be used to return a list fo Modified teams instead of the result set.
-	private class ModifiedTeam {
-		private String teamName;
-		private int teamID;
-		private int phoneNum;
+//	// Here we are making a new class, this will be used to return a list fo Modified teams instead of the result set.
+//	private class ModifiedTeam {
+//		private String teamName;
+//		private int teamID;
+//		private int phoneNum;
+//
+//		public ModifiedTeam(String teamName, int teamID, int phoneNum) {
+//			this.teamName = teamName;
+//			this.teamID = teamID;
+//			this.phoneNum = phoneNum;
+//		}
+//
+//		public String getTeamName() {
+//			return teamName;
+//		}
+//
+//		public void setTeamName(String teamName) {
+//			this.teamName = teamName;
+//		}
+//
+//		public int getTeamID() {
+//			return teamID;
+//		}
+//
+//		public void setTeamID(int teamID) {
+//			this.teamID = teamID;
+//		}
+//
+//		public int getPhoneNum() {
+//			return phoneNum;
+//		}
+//
+//		public void setPhoneNum(int phoneNum) {
+//			this.phoneNum = phoneNum;
+//		}
+//	}
 
-		public ModifiedTeam(String teamName, int teamID, int phoneNum) {
-			this.teamName = teamName;
-			this.teamID = teamID;
-			this.phoneNum = phoneNum;
-		}
 
-		public String getTeamName() {
-			return teamName;
-		}
+	public ArrayList<ModifiedTeamModel> getteamNameIDandNum(){
 
-		public void setTeamName(String teamName) {
-			this.teamName = teamName;
-		}
-
-		public int getTeamID() {
-			return teamID;
-		}
-
-		public void setTeamID(int teamID) {
-			this.teamID = teamID;
-		}
-
-		public int getPhoneNum() {
-			return phoneNum;
-		}
-
-		public void setPhoneNum(int phoneNum) {
-			this.phoneNum = phoneNum;
-		}
-	}
-
-
-	public ArrayList<ModifiedTeam> getteamNameIDandNum(){
-
-		ArrayList<ModifiedTeam> result = new ArrayList<>();
+		ArrayList<ModifiedTeamModel> result = new ArrayList<>();
 
 		try {
 			// Create a statement for passing into result set
@@ -108,7 +108,7 @@ public class DatabaseConnectionHandler {
 			// For the return statement.
 
 			while(rs.next()) {
-				ModifiedTeam model = new ModifiedTeam(
+				ModifiedTeamModel model = new ModifiedTeamModel(
 						rs.getString("teamName"),
 						rs.getInt("teamID"),
 						rs.getInt("PhoneNum")
