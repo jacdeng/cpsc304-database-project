@@ -13,11 +13,9 @@ import ca.ubc.cs304.model.BranchModel;
  */
 public interface TransactionsWindowDelegate {
 	public void databaseSetup();
-	
 	public void deleteBranch(int branchId);
 	public void insertBranch(BranchModel model);
 	public void showBranch();
 	public void updateBranch(int branchId, String name);
-	
 	public void terminalTransactionsFinished();
 }

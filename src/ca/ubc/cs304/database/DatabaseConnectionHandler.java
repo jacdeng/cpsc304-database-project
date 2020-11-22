@@ -47,6 +47,159 @@ public class DatabaseConnectionHandler {
 	}
 
 	/**
+	 * Projection Handler
+	 * Projecting a teamName, TeamID and Phonenumber of a particular team
+	 * Input: teamName, TeamID, Phonenumber
+	 * Output: List of teams with the columns teamName, teamID, Phonenumber.
+	 */
+	// Here we are making a new class, this will be used to return a list fo Modified teams instead of the result set.
+	private class ModifiedTeam {
+		private String teamName;
+		private int teamID;
+		private int phoneNum;
+
+		public ModifiedTeam(String teamName, int teamID, int phoneNum) {
+			this.teamName = teamName;
+			this.teamID = teamID;
+			this.phoneNum = phoneNum;
+		}
+
+		public String getTeamName() {
+			return teamName;
+		}
+
+		public void setTeamName(String teamName) {
+			this.teamName = teamName;
+		}
+
+		public int getTeamID() {
+			return teamID;
+		}
+
+		public void setTeamID(int teamID) {
+			this.teamID = teamID;
+		}
+
+		public int getPhoneNum() {
+			return phoneNum;
+		}
+
+		public void setPhoneNum(int phoneNum) {
+			this.phoneNum = phoneNum;
+		}
+	}
+
+
+	public ArrayList<ModifiedTeam> getteamNameIDandNum(){
+
+		ArrayList<ModifiedTeam> result = new ArrayList<>();
+
+		try {
+			// Create a statement for passing into result set
+			Statement stmt = connection.createStatement();
+			// Prepare statement where we select the columns of teamID, teamName and phoneNum
+			PreparedStatement ps = connection.prepareStatement("SELECT teamID, teamName, phoneNum FROM Team_HasManages ");
+
+			// executing the statement to get a resultset.
+			// String.valueOf converts the prepared statement into a useable string for the ResultSet class.
+			ResultSet rs = stmt.executeQuery(String.valueOf(ps));
+
+			// While loop to go over result set and create new models for teams and then put them into the result(list),
+			// For the return statement.
+
+			while(rs.next()) {
+				ModifiedTeam model = new ModifiedTeam(
+						rs.getString("teamName"),
+						rs.getInt("teamID"),
+						rs.getInt("PhoneNum")
+				);
+
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+		// Return the resulting list of modfiedTeam models.
+		return result;
+	}
+
+
+	/**
+	 * Selection Handler
+	 * Selection is for a team, and you may select the payers on a given team.
+	 * Input: teamID (Primary Key)
+	 * Output: List of Players on the teamID
+	 */
+	public ArrayList<FootballPlayerModel> select(int wantedTeamID){
+//		// Making new list of football players to output.
+		ArrayList<FootballPlayerModel> result = new ArrayList<FootballPlayerModel>();
+
+		try {
+			// Create a statement for passing into result set
+			Statement stmt = connection.createStatement();
+			// Prepare statement wehre teamID is equal to the argument wantedteamID
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM FootballPlayer WHERE teamID = ?");
+			// Setting the parameter in SQL to be wantedteamID
+			ps.setInt(1, wantedTeamID);
+			// executing the statement to get a resultset.
+			// String.valueOf converts the prepared statement into a useable string for the ResultSet class.
+			ResultSet rs = stmt.executeQuery(String.valueOf(ps));
+
+
+
+
+//    		// get info on ResultSet
+//    		ResultSetMetaData rsmd = rs.getMetaData();
+//
+//    		System.out.println(" ");
+//
+//    		// display column names;
+//    		for (int i = 0; i < rsmd.getColumnCount(); i++) {
+//    			// get column name and print it
+//    			System.out.printf("%-15s", rsmd.getColumnName(i + 1));
+//    		}
+			// While loop to go over result set and create new models for the players and then put them into the result (list),
+			// For the return statement.
+			while(rs.next()) {
+				FootballPlayerModel model = new FootballPlayerModel(
+						rs.getInt("licenceNum"),
+						rs.getInt("jerseyNum"),
+						rs.getString("firstName"),
+						rs.getString("lastName"),
+						rs.getString("nationality"),
+						rs.getString("dateOfBirth"),
+						rs.getInt("goalsConceded"),
+						rs.getInt("goalsSaved"),
+						rs.getInt("bigChances"),
+						rs.getInt("keyPasses"),
+						rs.getInt("interceptions"),
+						rs.getInt("recoveries"),
+						rs.getInt("successfulTackles"),
+						rs.getInt("blocks"),
+						rs.getInt("clearances"),
+						rs.getString("contractStart"),
+						rs.getString("contractEnd"),
+						rs.getInt("teamID"));
+
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+
+
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+		// Return the resulting list of footballplayer models.
+		return result;
+
+	}
+
+	/**
 	 * START OF DELETION HANDLER METHODS
 	 */
 
