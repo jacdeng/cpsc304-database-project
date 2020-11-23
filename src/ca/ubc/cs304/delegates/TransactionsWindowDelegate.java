@@ -34,5 +34,6 @@ public interface TransactionsWindowDelegate {
 	public void selectteamplayers(int wantedTeamID);
 	public void getEligibleSquads();
 	public void getteamsforarena(String city);
+	public void GGOAT();
 
 }

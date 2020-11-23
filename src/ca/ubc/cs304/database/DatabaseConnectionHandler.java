@@ -197,6 +197,44 @@ public class DatabaseConnectionHandler {
 	 */
 
 	/**
+	 * Start of Nested Aggregation handler
+	 */
+	public ArrayList<ModifiedFootballPlayer> GGOAT() {
+//		// Making new list of football players to output.
+		ArrayList<ModifiedFootballPlayer> result = new ArrayList<ModifiedFootballPlayer>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM FootballPlayer GROUP BY nationality HAVING goalsSaved > ANY (SELECT MAX(goalsSaved) FROM FootballPlayer GROUP BY nationality)");
+			// executing the statement to get a resultset.
+			// String.valueOf converts the prepared statement into a useable string for the ResultSet class.
+			ResultSet rs = stmt.executeQuery(String.valueOf(ps));
+
+			while (rs.next()) {
+				ModifiedFootballPlayer model = new ModifiedFootballPlayer(
+						rs.getString("firstName"),
+						rs.getString("lastName"),
+						rs.getInt("jerseyNum"),
+						rs.getInt("goalsSaved")
+				);
+
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+		return result;
+	}
+
+	/**
+	 * End of Nested aggregation handler
+	 */
+
+	/**
 	 * Joins handler
 	 * Query joins the arena and team, Selects a specific city (inputted by User), projects the teamName, teamID & PhoneNum of all
 	 * the teams that are located in that city and use the arena as their home arena.
