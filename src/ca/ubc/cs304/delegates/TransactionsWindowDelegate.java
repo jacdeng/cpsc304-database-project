@@ -18,4 +18,5 @@ public interface TransactionsWindowDelegate {
 	public void showBranch();
 	public void updateBranch(int branchId, String name);
 	public void terminalTransactionsFinished();
+	public BranchModel[] getBranch();
 }

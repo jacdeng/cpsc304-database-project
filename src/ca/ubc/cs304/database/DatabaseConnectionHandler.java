@@ -114,8 +114,6 @@ public class DatabaseConnectionHandler {
 			ResultSet rs = stmt.executeQuery(String.valueOf(ps));
 
 
-
-
 //    		// get info on ResultSet
 //    		ResultSetMetaData rsmd = rs.getMetaData();
 //

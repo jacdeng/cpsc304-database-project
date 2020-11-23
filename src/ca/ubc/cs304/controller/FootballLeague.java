@@ -5,7 +5,7 @@ import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TransactionsWindowDelegate;
 import ca.ubc.cs304.model.*;
 import ca.ubc.cs304.ui.LoginWindow;
-import ca.ubc.cs304.ui.TransactionsWindow;
+import ca.ubc.cs304.ui.TransactionsTerminal;
 
 /**
  * This is the main controller class that will orchestrate everything.
@@ -35,7 +35,7 @@ public class FootballLeague implements LoginWindowDelegate, TransactionsWindowDe
 			// Once connected, remove login window and start text transaction flow
 			loginWindow.dispose();
 
-			TransactionsWindow transaction = new TransactionsWindow();
+			TransactionsTerminal transaction = new TransactionsTerminal();
 			transaction.setupDatabase(this);
 			transaction.showMainMenu(this);
 		} else {
@@ -198,6 +198,9 @@ public class FootballLeague implements LoginWindowDelegate, TransactionsWindowDe
 	 * 
 	 * Displays information about varies bank branches.
 	 */
+	public BranchModel[] getBranch(){
+		return  dbHandler.getBranchInfo();
+	}
     public void showBranch() {
     	BranchModel[] models = dbHandler.getBranchInfo();
     	
