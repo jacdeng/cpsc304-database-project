@@ -14,43 +14,51 @@ import javax.swing.*;
 
 import ca.ubc.cs304.delegates.TransactionsWindowDelegate;
 import ca.ubc.cs304.model.BranchModel;
+import ca.ubc.cs304.model.FootballPlayerModel;
 
 public class TransactionsWindow extends JFrame{
 	private static final int TEXT_FIELD_WIDTH = 10;
 
 	private GridBagLayout gb;
 	private GridBagConstraints c;
+
 	private JPanel contentpane;
+	private JScrollPane masterpane;
 
 	// delegate
 	private TransactionsWindowDelegate delegate;
 
-	//BRANCH FIELDS
-	private JTextField branch_IDtxt, branch_nametxt, branch_addrtxt, branch_citytxt, branch_phonenumtxt;
-	private JTextField branch_delIDtxt;
-	private JButton branchInsertButton;
-	private JButton branchDeleteButton;
-	private JButton branchShowButton;
-	private JTextArea branchTable;
+	//Football player FIELDS
+	private JPanel playerpane;
+	private JTextField player_firstnametxt, player_lastnametxt, player_licensenumtxt, player_dateofbirthtxt,
+			player_nationalitytxt, player_jersynumtxt, player_goalconcededtxt, player_goalsavedtxt, player_succtackletxt, player_blockstxt,
+			player_cleartxt, player_intercepttxt, player_recoveriestxt, player_keypasstxt, player_bigchancetxt,
+			player_contractstart, player_contractend, player_teamID;
+	private JTextField player_dellicensenumtxt;
+	private JButton playerInsertButton;
+	private JButton playerDeleteButton;
+	private JButton playerShowButton;
+	private JTextArea playerTable;
 
 	//constructor
 	public TransactionsWindow(){ super("Transactions Window");}
 
 	public void showFrame(TransactionsWindowDelegate delegate){
-		// create masterpanel that will contain all the smaller panels
-		JPanel MasterPanel = new JPanel();
-		this.setContentPane(MasterPanel);
-		this.contentpane = MasterPanel;
 		this.delegate = delegate;
 
-		MasterPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
+		// create contentpanel that will contain all the smaller panels
+		JPanel ContentPanel = new JPanel();
+		this.setContentPane(ContentPanel);
+		this.contentpane = ContentPanel;
+
+		ContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
 		GridBagLayout gb = new GridBagLayout();
 		this.gb = gb;
 		GridBagConstraints c = new GridBagConstraints();
 		this.c = c;
-		MasterPanel.setLayout(gb);
+		ContentPanel.setLayout(gb);
 
-		Branch();
+		Player();
 
 		// anonymous inner class for closing the window
 		this.addWindowListener(new WindowAdapter() {
@@ -71,85 +79,262 @@ public class TransactionsWindow extends JFrame{
 		this.setVisible(true);
 	}
 
-	// BRANCH
-	private void Branch(){
-		insertBranch();
-		deleteBranch();
+	// PLAYER
+	private void Player(){
+		this.playerpane = new JPanel();
+		insertPlayer();
+		deletePlayer();
 		showBranchStatic();
+		contentpane.add(playerpane);
 	}
-	private void insertBranch(){
+	private void insertPlayer(){
 		JButton insertButton = new JButton("insert branch");
-		branchInsertButton = insertButton;
-		JLabel IDlbl, namelbl, addrlbl, citylbl, phonenumlbl;
+		playerInsertButton = insertButton;
+		JLabel licenselbl, firstnamelbl, lastnamelbl, doblbl, nationlbl, jrynumlbl, golconcelbl, golsvdlbl, succtacklbl,
+				blklbl, clrlbl, interceptlbl, recoverlbl, keypaslbl, bigchancelbl,
+				contractstartlbl, contractendlbl, teamIDlbl;
 
 		// initing labels
-		IDlbl = new JLabel("enter branch ID to insert: ");
-		namelbl = new JLabel("enter branch name to insert: ");
-		addrlbl = new JLabel("enter branch address to insert: ");
-		citylbl = new JLabel("enter branch city to insert: ");
-		phonenumlbl = new JLabel("enter branch phonenum to insert: ");
+		licenselbl = new JLabel("enter player license num to insert: ");
+		firstnamelbl = new JLabel("enter player first name to insert: ");
+		lastnamelbl = new JLabel("enter player last name to insert: ");
+		doblbl = new JLabel("enter date of birth to insert: ");
+		nationlbl = new JLabel("enter player nationality to insert: ");
+		jrynumlbl = new JLabel("enter player jersey number to insert: ");
+
+		golconcelbl = new JLabel("enter player goals conceded to insert (or leave empty): ");
+		golsvdlbl = new JLabel("enter player goals saved to insert (or leave empty): ");
+		succtacklbl = new JLabel("enter player successful tackles to insert (or leave empty): ");
+		blklbl = new JLabel("enter player blocks to insert (or leave empty): ");
+		clrlbl = new JLabel("enter player clears to insert (or leave empty): ");
+		interceptlbl = new JLabel("enter player intercepts to insert (or leave empty): ");
+		recoverlbl = new JLabel("enter player recoveries to insert (or leave empty): ");
+		keypaslbl = new JLabel("enter player key passes to insert (or leave empty): ");
+		bigchancelbl = new JLabel("enter player big chances to insert (or leave empty): ");
+
+		contractstartlbl = new JLabel("enter player contract start to insert: ");
+		contractendlbl = new JLabel("enter player contract end to insert: ");
+		teamIDlbl = new JLabel("enter player's teamID to insert: ");
 
 		// initing txt
-		branch_IDtxt = new JTextField(TEXT_FIELD_WIDTH);
-		branch_nametxt = new JTextField(TEXT_FIELD_WIDTH);
-		branch_addrtxt = new JTextField(TEXT_FIELD_WIDTH);
-		branch_citytxt = new JTextField(TEXT_FIELD_WIDTH);
-		branch_phonenumtxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_firstnametxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_lastnametxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_licensenumtxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_dateofbirthtxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_nationalitytxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_jersynumtxt = new JTextField(TEXT_FIELD_WIDTH);
 
-		// place the id label
+		player_goalconcededtxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_goalsavedtxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_succtackletxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_blockstxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_cleartxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_intercepttxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_recoveriestxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_keypasstxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_bigchancetxt = new JTextField(TEXT_FIELD_WIDTH);
+
+		player_contractstart = new JTextField(TEXT_FIELD_WIDTH);
+		player_contractend = new JTextField(TEXT_FIELD_WIDTH);
+		player_teamID = new JTextField(TEXT_FIELD_WIDTH);
+
+		// place the license label
 		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.insets = new Insets(10, 10, 5, 0);
-		gb.setConstraints(IDlbl, c);
-		contentpane.add(IDlbl);
+		c.insets = new Insets(10, 10, 3, 0);
+		gb.setConstraints(licenselbl, c);
+		playerpane.add(licenselbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(10, 0, 5, 10);
-		gb.setConstraints(branch_IDtxt, c);
-		contentpane.add(branch_IDtxt);
+		c.insets = new Insets(10, 0, 3, 10);
+		gb.setConstraints(player_licensenumtxt, c);
+		playerpane.add(player_licensenumtxt);
 
-		// place the name label
+		// place the firstname label
 		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.insets = new Insets(0, 10, 5, 0);
-		gb.setConstraints(namelbl, c);
-		contentpane.add(namelbl);
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(firstnamelbl, c);
+		playerpane.add(firstnamelbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(0, 0, 5, 10);
-		gb.setConstraints(branch_nametxt, c);
-		contentpane.add(branch_nametxt);
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_firstnametxt, c);
+		playerpane.add(player_firstnametxt);
 
-		// place the address label
+		// place the lastname label
 		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.insets = new Insets(0, 10, 5, 0);
-		gb.setConstraints(addrlbl, c);
-		contentpane.add(addrlbl);
-		// place the text field for the address
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(lastnamelbl, c);
+		playerpane.add(lastnamelbl);
+		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(0, 0, 5, 10);
-		gb.setConstraints(branch_addrtxt, c);
-		contentpane.add(branch_addrtxt);
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_lastnametxt, c);
+		playerpane.add(player_lastnametxt);
 
-		// place the city label
+		// place the date of birth label
 		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.insets = new Insets(0, 10, 5, 0);
-		gb.setConstraints(citylbl, c);
-		contentpane.add(citylbl);
-		// place the text field for the city
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(doblbl, c);
+		playerpane.add(doblbl);
+		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(0, 0, 5, 10);
-		gb.setConstraints(branch_citytxt, c);
-		contentpane.add(branch_citytxt);
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_dateofbirthtxt, c);
+		playerpane.add(player_dateofbirthtxt);
 
-		// place the phonenum label
+		// place the nationality label
 		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.insets = new Insets(0, 10, 5, 0);
-		gb.setConstraints(phonenumlbl, c);
-		contentpane.add(phonenumlbl);
-		// place the text field for the phonenum
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(nationlbl, c);
+		playerpane.add(nationlbl);
+		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(0, 0, 5, 10);
-		gb.setConstraints(branch_phonenumtxt, c);
-		contentpane.add(branch_phonenumtxt);
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_nationalitytxt, c);
+		playerpane.add(player_nationalitytxt);
+
+		// place the jerseynum label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(jrynumlbl, c);
+		playerpane.add(jrynumlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_jersynumtxt, c);
+		playerpane.add(player_jersynumtxt);
+
+		// place the goals conceded label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(golconcelbl, c);
+		playerpane.add(golconcelbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_goalconcededtxt, c);
+		playerpane.add(player_goalconcededtxt);
+
+		// place the goals saved label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(golsvdlbl, c);
+		playerpane.add(golsvdlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_goalsavedtxt, c);
+		playerpane.add(player_goalsavedtxt);
+
+		// place the successful tackles label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(succtacklbl, c);
+		playerpane.add(succtacklbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_succtackletxt, c);
+		playerpane.add(player_succtackletxt);
+
+		// place the blocks label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(blklbl, c);
+		playerpane.add(blklbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_blockstxt, c);
+		playerpane.add(player_blockstxt);
+
+		// place the clearances label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(clrlbl, c);
+		playerpane.add(clrlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_cleartxt, c);
+		playerpane.add(player_cleartxt);
+
+		// place the intercept label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(interceptlbl, c);
+		playerpane.add(interceptlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_intercepttxt, c);
+		playerpane.add(player_intercepttxt);
+
+		// place the recoveries label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(recoverlbl, c);
+		playerpane.add(recoverlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_recoveriestxt, c);
+		playerpane.add(player_recoveriestxt);
+
+		// place the keypass label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(keypaslbl, c);
+		playerpane.add(keypaslbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_keypasstxt, c);
+		playerpane.add(player_keypasstxt);
+
+		// place the big chance label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(bigchancelbl, c);
+		playerpane.add(bigchancelbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_bigchancetxt, c);
+		playerpane.add(player_bigchancetxt);
+
+		// place the contract start label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(contractstartlbl, c);
+		playerpane.add(contractstartlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_contractstart, c);
+		playerpane.add(player_contractstart);
+
+		// place the contract end label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(contractendlbl, c);
+		playerpane.add(contractendlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_contractend, c);
+		playerpane.add(player_contractend);
+
+		// place the team id label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(teamIDlbl, c);
+		playerpane.add(teamIDlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_teamID, c);
+		playerpane.add(player_teamID);
 
 		// place the insert button
 		c.gridwidth = GridBagConstraints.REMAINDER;
@@ -160,67 +345,67 @@ public class TransactionsWindow extends JFrame{
 
 		insertButton.addActionListener(new BranchButtonListener());
 	}
-	private void deleteBranch(){
+	private void deletePlayer(){
 		JButton deleteButton = new JButton("delete branch");
-		branchDeleteButton = deleteButton;
-		JLabel IDlbl;
+		playerDeleteButton = deleteButton;
+		JLabel licenselbl;
 
 		// initing labels
-		IDlbl = new JLabel("enter branch ID to delete: ");
+		licenselbl = new JLabel("enter player license to delete: ");
 
 		// initing txt
-		branch_delIDtxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_dellicensenumtxt = new JTextField(TEXT_FIELD_WIDTH);
 
 		// place the id label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(10, 10, 5, 0);
-		gb.setConstraints(IDlbl, c);
-		contentpane.add(IDlbl);
+		gb.setConstraints(licenselbl, c);
+		playerpane.add(licenselbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 0, 5, 10);
-		gb.setConstraints(branch_delIDtxt, c);
-		contentpane.add(branch_delIDtxt);
+		gb.setConstraints(player_dellicensenumtxt, c);
+		playerpane.add(player_dellicensenumtxt);
 
 		// place the delete button
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
 		gb.setConstraints(deleteButton, c);
-		contentpane.add(deleteButton);
+		playerpane.add(deleteButton);
 
 		deleteButton.addActionListener(new BranchButtonListener());
 
 	}
 	private void showBranchStatic(){
 		JButton showButton = new JButton("show branch");
-		branchShowButton = showButton;
-		branchTable = new JTextArea(10,50);
+		playerShowButton = showButton;
+		playerTable = new JTextArea(10,40);
 
 		// place the Textarea
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 10, 5, 0);
-		gb.setConstraints(branchTable, c);
-		contentpane.add(branchTable);
+		gb.setConstraints(playerTable, c);
+		playerpane.add(playerTable);
 
 		// place the show button
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
 		gb.setConstraints(showButton, c);
-		contentpane.add(showButton);
+		playerpane.add(showButton);
 
 		showButton.addActionListener(new BranchButtonListener());
 
 	}
-	private void showBranchDynamic(BranchModel[] models){
-		branchTable.setText("");
-		branchTable.append(" legend:  [  id  :  name  :  city  :  address  :  phonenum  ] \t \n");
-		branchTable.append(parseTable(models));
-		contentpane.update(branchTable.getGraphics());
+	private void showPlayerDynamic(FootballPlayerModel[] models){
+		playerTable.setText("");
+		playerTable.append(" [ license : jerseynum : firstname : lastname : nationality : date of birth : goals conceded : goals saved : big chances : key passes : interceptions : recoveries : successful tackles : blocks : clearances : contract start : contract end : teamID ] \t \n");
+		playerTable.append(parseTable(models));
+		playerpane.update(playerTable.getGraphics());
 
 	}
-	private String parseTable(BranchModel[] models){
+	private String parseTable(FootballPlayerModel[] models){
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<models.length; i++){
 			String str = parseModel(models[i]);
@@ -229,19 +414,99 @@ public class TransactionsWindow extends JFrame{
 		}
 		return sb.toString();
 	}
-	private String parseModel(BranchModel model){
+	private String parseModel(FootballPlayerModel model){
 		StringBuilder sb = new StringBuilder();
-		sb.append("  [  ");
-		sb.append(model.getId());
-		sb.append("  :  ");
-		sb.append(model.getName());
-		sb.append("  :  ");
-		sb.append(model.getCity());
-		sb.append("  :  ");
-		sb.append(model.getAddress());
-		sb.append("  :  ");
-		sb.append(model.getPhoneNumber());
-		sb.append("  ]");
+		sb.append("  [ ");
+		sb.append(model.getLicenseNum());
+		sb.append(" : ");
+		sb.append(model.getJerseyNum());
+		sb.append(" : ");
+		sb.append(model.getFirstName());
+		sb.append(" : ");
+		sb.append(model.getLastName());
+		sb.append(" : ");
+		sb.append(model.getNationality());
+		sb.append(" : ");
+		sb.append(model.getDateOfBirth());
+		sb.append(" : ");
+
+		if(model.getGoalsConceded() == -1){
+			sb.append(" null ");
+			sb.append(" : ");
+		}else{
+			sb.append(model.getGoalsConceded());
+			sb.append(" : ");
+		}
+		if(model.getGoalsSaved() == -1){
+			sb.append(" null ");
+			sb.append(" : ");
+		}else{
+			sb.append(model.getGoalsSaved());
+			sb.append(" : ");
+		}
+		if(model.getBigChances() == -1){
+			sb.append(" null ");
+			sb.append(" : ");
+		}else{
+			sb.append(model.getBigChances());
+			sb.append(" : ");
+		}
+		if(model.getKeyPasses() == -1){
+			sb.append(" null ");
+			sb.append(" : ");
+		}else{
+			sb.append(model.getKeyPasses());
+			sb.append(" : ");
+		}
+		if(model.getInterceptions() == -1){
+			sb.append(" null ");
+			sb.append(" : ");
+		}else{
+			sb.append(model.getInterceptions());
+			sb.append(" : ");
+		}
+		if(model.getRecoveries() == -1){
+			sb.append(" null ");
+			sb.append(" : ");
+		}else{
+			sb.append(model.getRecoveries());
+			sb.append(" : ");
+		}
+		if(model.getSuccessfulTackles() == -1){
+			sb.append(" null ");
+			sb.append(" : ");
+		}else{
+			sb.append(model.getSuccessfulTackles());
+			sb.append(" : ");
+		}
+		if(model.getBlocks() == -1){
+			sb.append(" null ");
+			sb.append(" : ");
+		}else{
+			sb.append(model.getBlocks());
+			sb.append(" : ");
+		}
+		if(model.getBlocks() == -1){
+			sb.append(" null ");
+			sb.append(" : ");
+		}else{
+			sb.append(model.getBlocks());
+			sb.append(" : ");
+		}
+		if(model.getClearances() == -1){
+			sb.append(" null ");
+			sb.append(" : ");
+		}else{
+			sb.append(model.getClearances());
+			sb.append(" : ");
+		}
+
+		sb.append(model.getContractStart());
+		sb.append(" : ");
+		sb.append(model.getContractEnd());
+		sb.append(" : ");
+		sb.append(model.getTeamID());
+		sb.append(" ]");
 		return sb.toString();
 	}
 
@@ -249,27 +514,96 @@ public class TransactionsWindow extends JFrame{
 	private class BranchButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == branchInsertButton){
+			if(e.getSource() == playerInsertButton){
+				int golconc;
+				int golsav;
+				int chanc;
+				int keypas;
+				int inter;
+				int recover;
+				int succtack;
+				int blk;
+				int clr;
 
-				String sr = String.format("trying to insert branch with: \n addr: %s, city: %s, id: %s, name: %s, phone: %s \n", branch_addrtxt.getText(), branch_citytxt.getText(),branch_IDtxt.getText(), branch_nametxt.getText(), branch_phonenumtxt.getText());
+				if(player_goalconcededtxt.getText() == null){
+					golconc = -1;
+				}else{
+					golconc = Integer.parseInt(player_goalconcededtxt.getText());
+				}
+
+				if(player_goalsavedtxt.getText() == null){
+					golsav = -1;
+				}else{
+					golsav = Integer.parseInt(player_goalsavedtxt.getText());
+				}
+
+				if(player_bigchancetxt.getText() == null){
+					chanc = -1;
+				}else{
+					chanc = Integer.parseInt(player_bigchancetxt.getText());
+				}
+
+				if(player_keypasstxt.getText() == null){
+					keypas = -1;
+				}else{
+					keypas = Integer.parseInt(player_keypasstxt.getText());
+				}
+
+				if(player_intercepttxt.getText() == null){
+					inter = -1;
+				}else{
+					inter = Integer.parseInt(player_intercepttxt.getText());
+				}
+
+				if(player_recoveriestxt.getText() == null){
+					recover = -1;
+				}else{
+					recover = Integer.parseInt(player_recoveriestxt.getText());
+				}
+
+				if(player_succtackletxt.getText() == null){
+					succtack = -1;
+				}else{
+					succtack = Integer.parseInt(player_succtackletxt.getText());
+				}
+
+				if(player_blockstxt.getText() == null){
+					blk = -1;
+				}else{
+					blk = Integer.parseInt(player_blockstxt.getText());
+				}
+
+				if(player_cleartxt.getText() == null){
+					clr = -1;
+				}else{
+					clr = Integer.parseInt(player_cleartxt.getText());
+				}
+
+				FootballPlayerModel model = new FootballPlayerModel(
+						Integer.parseInt(player_licensenumtxt.getText()),
+						Integer.parseInt(player_jersynumtxt.getText()),
+						player_firstnametxt.getText(),
+						player_lastnametxt.getText(),
+						player_nationalitytxt.getText(),
+						player_dateofbirthtxt.getText(),
+						golconc, golsav, chanc, keypas, inter, recover, succtack, blk, clr,
+						player_contractstart.getText(),
+						player_contractend.getText(),
+						Integer.parseInt(player_teamID.getText())
+				);
+				delegate.insertPlayer(model);
+
+			} else if (e.getSource() == playerDeleteButton){
+
+				String sr = String.format("trying to delete player with: \n license num: %d \n", Integer.parseInt(player_dellicensenumtxt.getText()));
 				System.out.print(sr);
 
-				BranchModel model = new BranchModel(branch_addrtxt.getText(),
-						branch_citytxt.getText(), Integer.parseInt(branch_IDtxt.getText()),
-						branch_nametxt.getText(), Integer.parseInt(branch_phonenumtxt.getText()));
-				delegate.insertBranch(model);
+				delegate.deleteBranch(Integer.parseInt(player_dellicensenumtxt.getText()));
 
-			} else if (e.getSource() == branchDeleteButton){
-
-				String sr = String.format("trying to delete branch with: \n id: %d \n", Integer.parseInt(branch_delIDtxt.getText()));
-				System.out.print(sr);
-
-				delegate.deleteBranch(Integer.parseInt(branch_delIDtxt.getText()));
-
-			} else if (e.getSource() == branchShowButton){
+			} else if (e.getSource() == playerShowButton){
 				System.out.print("trying to get table \n");
-				BranchModel[] models = delegate.getBranch();
-				showBranchDynamic(models);
+				FootballPlayerModel[] models = delegate.getPlayer();
+				showPlayerDynamic(models);
 			}
 			else{
 				System.out.print("ugh something is wrong \n");
