@@ -1169,7 +1169,62 @@ public class DatabaseConnectionHandler {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM FootballPlayer_PlaysFor");
 
+			int tempGoalsConcede;
+			int tempGoalsSaved;
+			int tempBigChances;
+			int tempKeyPasses;
+			int tempInterceptions;
+			int tempRecoveries;
+			int tempSuccessfulTackles;
+			int tempBlocks;
+			int tempClearances;
+
 			while(rs.next()) {
+				if (rs.getInt("FootballPlayer_PlaysFor_goalsConcede") == 0) {
+					tempGoalsConcede = -1;
+				} else {
+					tempGoalsConcede = rs.getInt("FootballPlayer_PlaysFor_goalsConcede");
+				}
+				if (rs.getInt("FootballPlayer_PlaysFor_goalsSaved") == 0) {
+					tempGoalsSaved = -1;
+				} else {
+					tempGoalsSaved = rs.getInt("FootballPlayer_PlaysFor_goalsSaved");
+				}
+				if (rs.getInt("FootballPlayer_PlaysFor_bigChances") == 0) {
+					tempBigChances = -1;
+				} else {
+					tempBigChances = rs.getInt("FootballPlayer_PlaysFor_bigChances");
+				}
+				if (rs.getInt("FootballPlayer_PlaysFor_keyPasses") == 0) {
+					tempKeyPasses = -1;
+				} else {
+					tempKeyPasses = rs.getInt("FootballPlayer_PlaysFor_keyPasses");
+				}
+				if (rs.getInt("FootballPlayer_PlaysFor_interceptions") == 0) {
+					tempInterceptions = -1;
+				} else {
+					tempInterceptions = rs.getInt("FootballPlayer_PlaysFor_interceptions");
+				}
+				if (rs.getInt("FootballPlayer_PlaysFor_recoveries") == 0) {
+					tempRecoveries = -1;
+				} else {
+					tempRecoveries = rs.getInt("FootballPlayer_PlaysFor_recoveries");
+				}
+				if (rs.getInt("FootballPlayer_PlaysFor_successfulTackles") == 0) {
+					tempSuccessfulTackles = -1;
+				} else {
+					tempSuccessfulTackles = rs.getInt("FootballPlayer_PlaysFor_successfulTackles");
+				}
+				if (rs.getInt("FootballPlayer_PlaysFor_blocks") == 0) {
+					tempBlocks = -1;
+				} else {
+					tempBlocks = rs.getInt("FootballPlayer_PlaysFor_blocks");
+				}
+				if (rs.getInt("FootballPlayer_PlaysFor_clearances") == 0) {
+					tempClearances = -1;
+				} else {
+					tempClearances = rs.getInt("FootballPlayer_PlaysFor_clearances");
+				}
 				FootballPlayerModel model = new FootballPlayerModel(
 						rs.getInt("FootballPLayer_PlaysFor_licenseNum"),
 						rs.getInt("FootballPLayer_PlaysFor_jerseyNum"),
@@ -1177,15 +1232,15 @@ public class DatabaseConnectionHandler {
 						rs.getString("FootballPlayer_PlaysFor_lastName"),
 						rs.getString("FootballPlayer_PlaysFor_nationality"),
 						rs.getString("FootballPlayer_PlaysFor_dateOfBirth"),
-						rs.getInt("FootballPlayer_PlaysFor_goalsConcede"),
-						rs.getInt("FootballPlayer_PlaysFor_goalsSaved"),
-						rs.getInt("FootballPlayer_PlaysFor_bigChances"),
-						rs.getInt("FootballPlayer_PlaysFor_keyPasses"),
-						rs.getInt("FootballPlayer_PlaysFor_interceptions"),
-						rs.getInt("FootballPlayer_PlaysFor_recoveries"),
-						rs.getInt("FootballPlayer_PlaysFor_successfulTackles"),
-						rs.getInt("FootballPlayer_PlaysFor_blocks"),
-						rs.getInt("FootballPlayer_PlaysFor_clearances"),
+						tempGoalsConcede,
+						tempGoalsSaved,
+						tempBigChances,
+						tempKeyPasses,
+						tempInterceptions,
+						tempRecoveries,
+						tempSuccessfulTackles,
+						tempBlocks,
+						tempClearances,
 						rs.getString("FootballPlayer_PlaysFor_contractStart"),
 						rs.getString("FootballPlayer_PlaysFor_contractEnd"),
 						rs.getInt("FootballPlayer_PlaysFor_teamID")
