@@ -52,42 +52,7 @@ public class DatabaseConnectionHandler {
 	 * Input: teamName, TeamID, Phonenumber
 	 * Output: List of teams with the columns teamName, teamID, Phonenumber.
 	 */
-//	// Here we are making a new class, this will be used to return a list fo Modified teams instead of the result set.
-//	private class ModifiedTeam {
-//		private String teamName;
-//		private int teamID;
-//		private int phoneNum;
-//
-//		public ModifiedTeam(String teamName, int teamID, int phoneNum) {
-//			this.teamName = teamName;
-//			this.teamID = teamID;
-//			this.phoneNum = phoneNum;
-//		}
-//
-//		public String getTeamName() {
-//			return teamName;
-//		}
-//
-//		public void setTeamName(String teamName) {
-//			this.teamName = teamName;
-//		}
-//
-//		public int getTeamID() {
-//			return teamID;
-//		}
-//
-//		public void setTeamID(int teamID) {
-//			this.teamID = teamID;
-//		}
-//
-//		public int getPhoneNum() {
-//			return phoneNum;
-//		}
-//
-//		public void setPhoneNum(int phoneNum) {
-//			this.phoneNum = phoneNum;
-//		}
-//	}
+
 
 
 	public ArrayList<ModifiedTeamModel> getteamNameIDandNum(){
@@ -199,6 +164,11 @@ public class DatabaseConnectionHandler {
 
 	}
 
+	/**
+	 * Start of Aggregation GROUP BY HAVING QUERY
+	 * @return
+	 */
+
 	public ArrayList<ModifiedTeamModel> getEligibleSquads(){
 		ArrayList<ModifiedTeamModel> result = new ArrayList<>();
 		try {
@@ -223,6 +193,67 @@ public class DatabaseConnectionHandler {
 		}
 		return result;
 	}
+
+	/**
+	 * End of Aggregation GROUP BY HAVING QUERY
+	 */
+
+	/**
+	 * Joins handler
+	 * Query joins the arena and team, Selects a specific city (inputted by User), projects the teamName, teamID & PhoneNum of all
+	 * the teams that are located in that city and use the arena as their home arena.
+	 * Input: String: City
+	 * Output: Arraylist of teamname, teamID and PhoneNum.
+	 */
+
+	public ArrayList<ModifiedTeamModel>getteamsforarena(String city){
+		ArrayList<ModifiedTeamModel> result = new ArrayList<>();
+
+		try {
+			// Create a statement for passing into result set
+			Statement stmt = connection.createStatement();
+			/**
+			 * Prepare a statement where we select teamID, teamName and phoneNum from the join between team, arena and location (Arena1)
+			 * where the locations city(user inputted) = location's city, teams arena name matches the arena's name and the address of the arena matches
+			 * the location.
+			 */
+			PreparedStatement ps = connection.prepareStatement(
+					"SELECT teamID, teamName, phoneNum " +
+							"FROM Team_HasManages team ,Arena1 location, Arena arena " +
+							"WHERE location.city = ? and team.arenaName = arena.name and arena.address = location.address ");
+
+			// Setting the ? inside the SQL WHERE clause to be city inputted by the user.
+			ps.setString(1,city);
+
+			// executing the statement to get a resultset.
+			// String.valueOf converts the prepared statement into a useable string for the ResultSet class.
+			ResultSet rs = stmt.executeQuery(String.valueOf(ps));
+
+			// While loop to go over result set and create new models for teams and then put them into the result(list),
+			// For the return statement.
+
+			while(rs.next()) {
+				ModifiedTeamModel model = new ModifiedTeamModel(
+						rs.getString("teamName"),
+						rs.getInt("teamID"),
+						rs.getInt("PhoneNum")
+				);
+
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+		// Return the resulting list of modfiedTeam models.
+		return result;
+	}
+	/**
+	 * End of Joins Handler
+	 */
+
 
 	/**
 	 * START OF DELETION HANDLER METHODS
