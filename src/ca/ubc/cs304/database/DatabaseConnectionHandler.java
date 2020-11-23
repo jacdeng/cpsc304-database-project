@@ -1596,7 +1596,7 @@ public class DatabaseConnectionHandler {
 			// creating script runner object with current connection
 			ScriptRunner sr = new ScriptRunner(connection, connection.getAutoCommit(), true);
 			// creating reader object
-			Reader reader = new BufferedReader(new FileReader("src/ca/ubc/cs304/sql/scripts/databaseSetup.sql"));
+			Reader reader = new BufferedReader(new FileReader("src/ca/ubc/cs304/sql/scripts/Football.sql"));
 			sr.runScript(reader);
 //			Statement stmt = connection.createStatement();
 //			stmt.executeUpdate("CREATE TABLE branch (branch_id integer PRIMARY KEY, branch_name varchar2(20) not null, branch_addr varchar2(50), branch_city varchar2(20) not null, branch_phone integer)");
@@ -1608,11 +1608,11 @@ public class DatabaseConnectionHandler {
 			e.printStackTrace();
 		}
 
-		BranchModel branch1 = new BranchModel("123 Charming Ave", "Vancouver", 1, "First Branch", 1234567);
-		insertBranch(branch1);
-
-		BranchModel branch2 = new BranchModel("123 Coco Ave", "Vancouver", 2, "Second Branch", 1234568);
-		insertBranch(branch2);
+//		BranchModel branch1 = new BranchModel("123 Charming Ave", "Vancouver", 1, "First Branch", 1234567);
+//		insertBranch(branch1);
+//
+//		BranchModel branch2 = new BranchModel("123 Coco Ave", "Vancouver", 2, "Second Branch", 1234568);
+//		insertBranch(branch2);
 	}
 	
 	private void dropBranchTableIfExists() {
