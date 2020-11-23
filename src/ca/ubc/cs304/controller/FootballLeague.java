@@ -6,6 +6,7 @@ import ca.ubc.cs304.delegates.TransactionsWindowDelegate;
 import ca.ubc.cs304.model.*;
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TransactionsTerminal;
+import ca.ubc.cs304.ui.TransactionsWindow;
 
 /**
  * This is the main controller class that will orchestrate everything.
@@ -35,9 +36,14 @@ public class FootballLeague implements LoginWindowDelegate, TransactionsWindowDe
 			// Once connected, remove login window and start text transaction flow
 			loginWindow.dispose();
 
-			TransactionsTerminal transaction = new TransactionsTerminal();
-			transaction.setupDatabase(this);
-			transaction.showMainMenu(this);
+			this.databaseSetup();
+
+			TransactionsWindow window = new TransactionsWindow();
+			window.showFrame(this);
+
+//			TransactionsTerminal transaction = new TransactionsTerminal();
+//			transaction.setupDatabase(this);
+//			transaction.showMainMenu(this);
 		} else {
 			loginWindow.handleLoginFailed();
 
