@@ -199,6 +199,31 @@ public class DatabaseConnectionHandler {
 
 	}
 
+	public ArrayList<ModifiedTeamModel> getEligibleSquads(){
+		ArrayList<ModifiedTeamModel> result = new ArrayList<>();
+		try {
+			Statement stmt = connection.createStatement();
+			PreparedStatement ps = connection.prepareStatement("SELECT teamID, teamName, phoneNum FROM Team_HasManages, FoootballPlayer WHERE Team_HasManages.teamID = FootballPlayer.teamID GROUP BY teamID HAVING COUNT(*) > 12");
+			ResultSet rs = stmt.executeQuery(String.valueOf(ps));
+
+			while(rs.next()) {
+				ModifiedTeamModel model = new ModifiedTeamModel(
+						rs.getString("teamName"),
+						rs.getInt("teamID"),
+						rs.getInt("PhoneNum")
+				);
+
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+		return result;
+	}
+
 	/**
 	 * START OF DELETION HANDLER METHODS
 	 */
