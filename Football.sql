@@ -116,7 +116,7 @@ CREATE TABLE Penalty_Receives (
     type char(30) NOT NULL,
     card char (8),
     duration, int NOT NULL,
-    licenceNum int PRIMARY KEY
+    licenseNum int PRIMARY KEY
 
 );
 

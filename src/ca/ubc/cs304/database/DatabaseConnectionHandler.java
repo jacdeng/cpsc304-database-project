@@ -255,6 +255,51 @@ public class DatabaseConnectionHandler {
 	 */
 
 
+	public ArrayList<FootballPlayerModel> receivedAllPenalties(){
+//		// Making new list of football players to output.
+		ArrayList<FootballPlayerModel> result = new ArrayList<FootballPlayerModel>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM FootballPlayer WHERE NOT EXISTS (SELECT type FROM Penalty_Receives WHERE NOT EXISTS (SELECT type FROM FootballPlayer WHERE FootballPlayer.licenseNum = Penalty_Receives.licenseNum))");
+			// executing the statement to get a resultset.
+			// String.valueOf converts the prepared statement into a useable string for the ResultSet class.
+			ResultSet rs = stmt.executeQuery(String.valueOf(ps));
+
+			while(rs.next()) {
+				FootballPlayerModel model = new FootballPlayerModel(
+						rs.getInt("licenceNum"),
+						rs.getInt("jerseyNum"),
+						rs.getString("firstName"),
+						rs.getString("lastName"),
+						rs.getString("nationality"),
+						rs.getString("dateOfBirth"),
+						rs.getInt("goalsConceded"),
+						rs.getInt("goalsSaved"),
+						rs.getInt("bigChances"),
+						rs.getInt("keyPasses"),
+						rs.getInt("interceptions"),
+						rs.getInt("recoveries"),
+						rs.getInt("successfulTackles"),
+						rs.getInt("blocks"),
+						rs.getInt("clearances"),
+						rs.getString("contractStart"),
+						rs.getString("contractEnd"),
+						rs.getInt("teamID"));
+
+				result.add(model);
+			}
+
+			rs.close();
+			stmt.close();
+
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+		return result;
+
+	}
+
 	/**
 	 * START OF DELETION HANDLER METHODS
 	 */
