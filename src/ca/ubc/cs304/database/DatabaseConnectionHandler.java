@@ -98,7 +98,7 @@ public class DatabaseConnectionHandler {
 	 * Input: teamID (Primary Key)
 	 * Output: List of Players on the teamID
 	 */
-	public ArrayList<FootballPlayerModel> select(int wantedTeamID){
+	public ArrayList<FootballPlayerModel> selectteamplayers(int wantedTeamID){
 //		// Making new list of football players to output.
 		ArrayList<FootballPlayerModel> result = new ArrayList<FootballPlayerModel>();
 

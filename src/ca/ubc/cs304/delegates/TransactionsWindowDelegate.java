@@ -19,4 +19,9 @@ public interface TransactionsWindowDelegate {
 	public void updateBranch(int branchId, String name);
 	public void terminalTransactionsFinished();
 	public BranchModel[] getBranch();
+	public void getteamNameIDandNum();
+	public void selectteamplayers(int wantedTeamID);
+	public void getEligibleSquads();
+	public void getteamsforarena(String city);
+
 }
