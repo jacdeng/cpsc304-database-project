@@ -1,10 +1,6 @@
 package ca.ubc.cs304.ui;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -15,6 +11,7 @@ import javax.swing.*;
 import ca.ubc.cs304.delegates.TransactionsWindowDelegate;
 import ca.ubc.cs304.model.BranchModel;
 import ca.ubc.cs304.model.FootballPlayerModel;
+import com.sun.tools.javac.comp.Flow;
 
 public class TransactionsWindow extends JFrame{
 	private static final int TEXT_FIELD_WIDTH = 10;
@@ -34,9 +31,14 @@ public class TransactionsWindow extends JFrame{
 			player_nationalitytxt, player_jersynumtxt, player_goalconcededtxt, player_goalsavedtxt, player_succtackletxt, player_blockstxt,
 			player_cleartxt, player_intercepttxt, player_recoveriestxt, player_keypasstxt, player_bigchancetxt,
 			player_contractstart, player_contractend, player_teamID;
+	private JTextField player_upfirstnametxt, player_uplastnametxt, player_uplicensenumtxt, player_updateofbirthtxt,
+			player_upnationalitytxt, player_upjersynumtxt, player_upgoalconcededtxt, player_upgoalsavedtxt, player_upsucctackletxt, player_upblockstxt,
+			player_upcleartxt, player_upintercepttxt, player_uprecoveriestxt, player_upkeypasstxt, player_upbigchancetxt,
+			player_upcontractstart, player_upcontractend, player_upteamID;
 	private JTextField player_dellicensenumtxt;
 	private JButton playerInsertButton;
 	private JButton playerDeleteButton;
+	private JButton playerUpdateButton;
 	private JButton playerShowButton;
 	private JTextArea playerTable;
 
@@ -53,9 +55,6 @@ public class TransactionsWindow extends JFrame{
 
 		ContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
 		GridBagLayout gb = new GridBagLayout();
-		this.gb = gb;
-		GridBagConstraints c = new GridBagConstraints();
-		this.c = c;
 		ContentPanel.setLayout(gb);
 
 		Player();
@@ -82,13 +81,20 @@ public class TransactionsWindow extends JFrame{
 	// PLAYER
 	private void Player(){
 		this.playerpane = new JPanel();
+		playerpane.setBorder(BorderFactory.createTitledBorder("football player"));
+		GridBagLayout gb = new GridBagLayout();
+		this.gb = gb;
+		GridBagConstraints c = new GridBagConstraints();
+		this.c = c;
+		playerpane.setLayout(gb);
 		insertPlayer();
 		deletePlayer();
+		updatePlayer();
 		showBranchStatic();
 		contentpane.add(playerpane);
 	}
 	private void insertPlayer(){
-		JButton insertButton = new JButton("insert branch");
+		JButton insertButton = new JButton("insert player");
 		playerInsertButton = insertButton;
 		JLabel licenselbl, firstnamelbl, lastnamelbl, doblbl, nationlbl, jrynumlbl, golconcelbl, golsvdlbl, succtacklbl,
 				blklbl, clrlbl, interceptlbl, recoverlbl, keypaslbl, bigchancelbl,
@@ -344,6 +350,264 @@ public class TransactionsWindow extends JFrame{
 		contentpane.add(insertButton);
 
 		insertButton.addActionListener(new BranchButtonListener());
+	}
+	private void updatePlayer(){
+		JButton updateButton = new JButton("update player");
+		playerUpdateButton = updateButton;
+		JLabel licenselbl, firstnamelbl, lastnamelbl, doblbl, nationlbl, jrynumlbl, golconcelbl, golsvdlbl, succtacklbl,
+				blklbl, clrlbl, interceptlbl, recoverlbl, keypaslbl, bigchancelbl,
+				contractstartlbl, contractendlbl, teamIDlbl;
+
+		// initing labels
+		licenselbl = new JLabel("enter player license num to update: ");
+		firstnamelbl = new JLabel("enter new player first name: ");
+		lastnamelbl = new JLabel("enter new player last name: ");
+		doblbl = new JLabel("enter new date of birth: ");
+		nationlbl = new JLabel("enter new player nationality: ");
+		jrynumlbl = new JLabel("enter new player jersey number: ");
+
+		golconcelbl = new JLabel("enter new player goals conceded: ");
+		golsvdlbl = new JLabel("enter new player goals saved: ");
+		succtacklbl = new JLabel("enter new player successful tackles: ");
+		blklbl = new JLabel("enter new player blocks: ");
+		clrlbl = new JLabel("enter new player clears: ");
+		interceptlbl = new JLabel("enter new player intercepts: ");
+		recoverlbl = new JLabel("enter new player recoveries: ");
+		keypaslbl = new JLabel("enter new player key passes: ");
+		bigchancelbl = new JLabel("enter new player big chances: ");
+
+		contractstartlbl = new JLabel("enter new player contract start: ");
+		contractendlbl = new JLabel("enter new player contract end: ");
+		teamIDlbl = new JLabel("enter new player's teamID: ");
+
+		// initing txt
+		player_upfirstnametxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_uplastnametxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_uplicensenumtxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_updateofbirthtxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_upnationalitytxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_upjersynumtxt = new JTextField(TEXT_FIELD_WIDTH);
+
+		player_upgoalconcededtxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_upgoalsavedtxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_upsucctackletxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_upblockstxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_upcleartxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_upintercepttxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_uprecoveriestxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_upkeypasstxt = new JTextField(TEXT_FIELD_WIDTH);
+		player_upbigchancetxt = new JTextField(TEXT_FIELD_WIDTH);
+
+		player_upcontractstart = new JTextField(TEXT_FIELD_WIDTH);
+		player_upcontractend = new JTextField(TEXT_FIELD_WIDTH);
+		player_upteamID = new JTextField(TEXT_FIELD_WIDTH);
+
+		// place the license label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(10, 10, 3, 0);
+		gb.setConstraints(licenselbl, c);
+		playerpane.add(licenselbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(10, 0, 3, 10);
+		gb.setConstraints(player_uplicensenumtxt, c);
+		playerpane.add(player_uplicensenumtxt);
+
+		// place the firstname label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(firstnamelbl, c);
+		playerpane.add(firstnamelbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upfirstnametxt, c);
+		playerpane.add(player_upfirstnametxt);
+
+		// place the lastname label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(lastnamelbl, c);
+		playerpane.add(lastnamelbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_uplastnametxt, c);
+		playerpane.add(player_uplastnametxt);
+
+		// place the date of birth label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(doblbl, c);
+		playerpane.add(doblbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_updateofbirthtxt, c);
+		playerpane.add(player_updateofbirthtxt);
+
+		// place the nationality label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(nationlbl, c);
+		playerpane.add(nationlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upnationalitytxt, c);
+		playerpane.add(player_upnationalitytxt);
+
+		// place the jerseynum label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(jrynumlbl, c);
+		playerpane.add(jrynumlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upjersynumtxt, c);
+		playerpane.add(player_upjersynumtxt);
+
+		// place the goals conceded label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(golconcelbl, c);
+		playerpane.add(golconcelbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upgoalconcededtxt, c);
+		playerpane.add(player_upgoalconcededtxt);
+
+		// place the goals saved label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(golsvdlbl, c);
+		playerpane.add(golsvdlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upgoalsavedtxt, c);
+		playerpane.add(player_upgoalsavedtxt);
+
+		// place the successful tackles label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(succtacklbl, c);
+		playerpane.add(succtacklbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upsucctackletxt, c);
+		playerpane.add(player_upsucctackletxt);
+
+		// place the blocks label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(blklbl, c);
+		playerpane.add(blklbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upblockstxt, c);
+		playerpane.add(player_upblockstxt);
+
+		// place the clearances label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(clrlbl, c);
+		playerpane.add(clrlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upcleartxt, c);
+		playerpane.add(player_upcleartxt);
+
+		// place the intercept label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(interceptlbl, c);
+		playerpane.add(interceptlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upintercepttxt, c);
+		playerpane.add(player_upintercepttxt);
+
+		// place the recoveries label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(recoverlbl, c);
+		playerpane.add(recoverlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_uprecoveriestxt, c);
+		playerpane.add(player_uprecoveriestxt);
+
+		// place the keypass label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(keypaslbl, c);
+		playerpane.add(keypaslbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upkeypasstxt, c);
+		playerpane.add(player_upkeypasstxt);
+
+		// place the big chance label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(bigchancelbl, c);
+		playerpane.add(bigchancelbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upbigchancetxt, c);
+		playerpane.add(player_upbigchancetxt);
+
+		// place the contract start label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(contractstartlbl, c);
+		playerpane.add(contractstartlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upcontractstart, c);
+		playerpane.add(player_upcontractstart);
+
+		// place the contract end label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(contractendlbl, c);
+		playerpane.add(contractendlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upcontractend, c);
+		playerpane.add(player_upcontractend);
+
+		// place the team id label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(teamIDlbl, c);
+		playerpane.add(teamIDlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(player_upteamID, c);
+		playerpane.add(player_upteamID);
+
+		// place the insert button
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(2, 10, 15, 10);
+		c.anchor = GridBagConstraints.CENTER;
+		gb.setConstraints(updateButton, c);
+		contentpane.add(updateButton);
+
+		updateButton.addActionListener(new BranchButtonListener());
 	}
 	private void deletePlayer(){
 		JButton deleteButton = new JButton("delete branch");
@@ -604,6 +868,133 @@ public class TransactionsWindow extends JFrame{
 				System.out.print("trying to get table \n");
 				FootballPlayerModel[] models = delegate.getPlayers();
 				showPlayerDynamic(models);
+			}else if(e.getSource() == playerUpdateButton){
+				int jerseynum;
+				String firstname;
+				String lastname;
+				String nationality;
+				String dateOfBirth;
+
+				int golconc;
+				int golsav;
+				int chanc;
+				int keypas;
+				int inter;
+				int recover;
+				int succtack;
+				int blk;
+				int clr;
+
+				String contractstart;
+				String contractend;
+				int teamID;
+
+				if(player_upjersynumtxt.getText() == null){
+					jerseynum = -1;
+				}else{
+					jerseynum = Integer.parseInt(player_upjersynumtxt.getText());
+				}
+
+				if(player_upfirstnametxt.getText() == null){
+					firstname = "";
+				}else{
+					firstname = player_upfirstnametxt.getText();
+				}
+
+				if(player_uplastnametxt.getText() == null){
+					lastname = "";
+				}else{
+					lastname = player_uplastnametxt.getText();
+				}
+
+				if(player_upnationalitytxt.getText() == null){
+					nationality = "";
+				}else{
+					nationality = player_upnationalitytxt.getText();
+				}
+
+				if(player_updateofbirthtxt.getText() == null){
+					dateOfBirth = "";
+				}else{
+					dateOfBirth = player_updateofbirthtxt.getText();
+				}
+
+				if(player_upgoalconcededtxt.getText() == null){
+					golconc = -1;
+				}else{
+					golconc = Integer.parseInt(player_upgoalconcededtxt.getText());
+				}
+
+				if(player_upgoalsavedtxt.getText() == null){
+					golsav = -1;
+				}else{
+					golsav = Integer.parseInt(player_upgoalsavedtxt.getText());
+				}
+
+				if(player_upbigchancetxt.getText() == null){
+					chanc = -1;
+				}else{
+					chanc = Integer.parseInt(player_upbigchancetxt.getText());
+				}
+
+				if(player_upkeypasstxt.getText() == null){
+					keypas = -1;
+				}else{
+					keypas = Integer.parseInt(player_upkeypasstxt.getText());
+				}
+
+				if(player_upintercepttxt.getText() == null){
+					inter = -1;
+				}else{
+					inter = Integer.parseInt(player_upintercepttxt.getText());
+				}
+
+				if(player_uprecoveriestxt.getText() == null){
+					recover = -1;
+				}else{
+					recover = Integer.parseInt(player_uprecoveriestxt.getText());
+				}
+
+				if(player_upsucctackletxt.getText() == null){
+					succtack = -1;
+				}else{
+					succtack = Integer.parseInt(player_upsucctackletxt.getText());
+				}
+
+				if(player_upblockstxt.getText() == null){
+					blk = -1;
+				}else{
+					blk = Integer.parseInt(player_upblockstxt.getText());
+				}
+
+				if(player_upcleartxt.getText() == null){
+					clr = -1;
+				}else{
+					clr = Integer.parseInt(player_upcleartxt.getText());
+				}
+
+				if(player_upcontractstart.getText() == null){
+					contractstart = "";
+				}else{
+					contractstart = player_upcontractstart.getText();
+				}
+
+				if(player_upcontractend.getText() == null){
+					contractend = "";
+				}else{
+					contractend = player_upcontractstart.getText();
+				}
+
+				if(player_upteamID.getText() == null){
+					teamID = -1;
+				}else{
+					teamID = Integer.parseInt(player_upteamID.getText());
+				}
+
+				delegate.updateFootballPlayer(jerseynum, firstname, lastname, nationality, dateOfBirth, golconc, golsav,
+						chanc, keypas, inter, recover, succtack, blk, clr, Integer.parseInt(player_uplicensenumtxt.getText()),
+						contractstart, contractend, teamID);
+
 			}
 			else{
 				System.out.print("ugh something is wrong \n");

@@ -23,6 +23,12 @@ public interface TransactionsWindowDelegate {
 	public void insertPlayer(FootballPlayerModel model);
 	public void deletePlayer(int licensenum);
 	public FootballPlayerModel[] getPlayers();
+	public void updateFootballPlayer(int jerseyNum, String firstName, String lastName, String nationality, String dateOfBirth,
+									 int goalsConceded, int goalsSaved,
+									 int bigChances, int keyPasses,
+									 int interceptions, int recoveries,
+									 int successfulTackles, int blocks, int clearances,
+									 int licenseNum, String contractStart, String contractEnd, int teamID);
 
 	public void getteamNameIDandNum();
 	public void selectteamplayers(int wantedTeamID);
