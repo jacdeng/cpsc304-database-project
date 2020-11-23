@@ -41,8 +41,7 @@ CREATE TABLE Arena(
     address char(100) NOT NULL,
     surfaceType char(50) NOT NULL, 
     capacity int NOT NULL, 
-    name char(50) PRIMARY KEY, 
-
+    arenaName char(50) PRIMARY KEY,
 ); 
 
 CREATE TABLE Arena1 (

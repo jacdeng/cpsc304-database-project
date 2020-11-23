@@ -54,8 +54,8 @@ public class TransactionsWindow extends JFrame{
 		this.contentpane = ContentPanel;
 
 		ContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
-		GridBagLayout gb = new GridBagLayout();
-		ContentPanel.setLayout(gb);
+		FlowLayout fl = new FlowLayout();
+		ContentPanel.setLayout(fl);
 
 		Player();
 
@@ -90,7 +90,7 @@ public class TransactionsWindow extends JFrame{
 		insertPlayer();
 		deletePlayer();
 		updatePlayer();
-		showBranchStatic();
+		showPlayerStatic();
 		contentpane.add(playerpane);
 	}
 	private void insertPlayer(){
@@ -347,7 +347,7 @@ public class TransactionsWindow extends JFrame{
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
 		gb.setConstraints(insertButton, c);
-		contentpane.add(insertButton);
+		playerpane.add(insertButton);
 
 		insertButton.addActionListener(new BranchButtonListener());
 	}
@@ -605,12 +605,12 @@ public class TransactionsWindow extends JFrame{
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
 		gb.setConstraints(updateButton, c);
-		contentpane.add(updateButton);
+		playerpane.add(updateButton);
 
 		updateButton.addActionListener(new BranchButtonListener());
 	}
 	private void deletePlayer(){
-		JButton deleteButton = new JButton("delete branch");
+		JButton deleteButton = new JButton("delete player");
 		playerDeleteButton = deleteButton;
 		JLabel licenselbl;
 
@@ -641,8 +641,8 @@ public class TransactionsWindow extends JFrame{
 		deleteButton.addActionListener(new BranchButtonListener());
 
 	}
-	private void showBranchStatic(){
-		JButton showButton = new JButton("show branch");
+	private void showPlayerStatic(){
+		JButton showButton = new JButton("show player");
 		playerShowButton = showButton;
 		playerTable = new JTextArea(10,40);
 
