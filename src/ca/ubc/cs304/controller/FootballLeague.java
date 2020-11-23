@@ -101,7 +101,7 @@ public class FootballLeague implements LoginWindowDelegate, TransactionsWindowDe
 	public void insertReferees(RefereesModel model) {
 		dbHandler.insertReferees(model);
 	}
-	public void insertFootballPlayers(FootballPlayerModel model) {
+	public void insertPlayer(FootballPlayerModel model) {
 		dbHandler.insertFootballPlayers(model);
 	}
 	public void insertStatsHas(StatsHasModel model) {
@@ -153,7 +153,7 @@ public class FootballLeague implements LoginWindowDelegate, TransactionsWindowDe
 	public void deleteReferees(int licenseNum, int matchID) {
 		dbHandler.deleteReferees(licenseNum, matchID);
 	}
-	public void deleteFootballPlayer(int licenseNum) {
+	public void deletePlayer(int licenseNum) {
 		dbHandler.deleteFootballPlayer(licenseNum);
 	}
 	public void deleteStatsHas(int licenseNum, String type) {
@@ -211,8 +211,8 @@ public class FootballLeague implements LoginWindowDelegate, TransactionsWindowDe
 	 * 
 	 * Displays information about varies bank branches.
 	 */
-	public BranchModel[] getBranch(){
-		return  dbHandler.getBranchInfo();
+	public FootballPlayerModel[] getPlayers(){
+		return  dbHandler.getFootballPlayerInfo();
 	}
     public void showBranch() {
     	BranchModel[] models = dbHandler.getBranchInfo();

@@ -598,11 +598,11 @@ public class TransactionsWindow extends JFrame{
 				String sr = String.format("trying to delete player with: \n license num: %d \n", Integer.parseInt(player_dellicensenumtxt.getText()));
 				System.out.print(sr);
 
-				delegate.deleteBranch(Integer.parseInt(player_dellicensenumtxt.getText()));
+				delegate.deletePlayer(Integer.parseInt(player_dellicensenumtxt.getText()));
 
 			} else if (e.getSource() == playerShowButton){
 				System.out.print("trying to get table \n");
-				FootballPlayerModel[] models = delegate.getPlayer();
+				FootballPlayerModel[] models = delegate.getPlayers();
 				showPlayerDynamic(models);
 			}
 			else{

@@ -1,6 +1,7 @@
 package ca.ubc.cs304.delegates;
 
 import ca.ubc.cs304.model.BranchModel;
+import ca.ubc.cs304.model.FootballPlayerModel;
 
 /**
  * This interface uses the delegation design pattern where instead of having
@@ -18,7 +19,11 @@ public interface TransactionsWindowDelegate {
 	public void showBranch();
 	public void updateBranch(int branchId, String name);
 	public void terminalTransactionsFinished();
-	public BranchModel[] getBranch();
+
+	public void insertPlayer(FootballPlayerModel model);
+	public void deletePlayer(int licensenum);
+	public FootballPlayerModel[] getPlayers();
+
 	public void getteamNameIDandNum();
 	public void selectteamplayers(int wantedTeamID);
 	public void getEligibleSquads();
