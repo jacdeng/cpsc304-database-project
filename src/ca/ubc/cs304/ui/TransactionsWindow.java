@@ -20,7 +20,8 @@ public class TransactionsWindow extends JFrame{
 	private GridBagConstraints c;
 
 	private JPanel contentpane;
-	private JScrollPane masterpane;
+	private JPanel masterpane;
+	private JScrollPane masterscrollpane;
 
 	// delegate
 	private TransactionsWindowDelegate delegate;
@@ -49,13 +50,16 @@ public class TransactionsWindow extends JFrame{
 		this.delegate = delegate;
 
 		// create contentpanel that will contain all the smaller panels
+//		JPanel masterPanel = new JPanel();
+//		this.setContentPane(masterPanel);
+//		this.masterpane = masterPanel;
+
 		JPanel ContentPanel = new JPanel();
 		this.setContentPane(ContentPanel);
 		this.contentpane = ContentPanel;
 
 		ContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
-		FlowLayout fl = new FlowLayout();
-		ContentPanel.setLayout(fl);
+
 
 		Player();
 
@@ -83,17 +87,30 @@ public class TransactionsWindow extends JFrame{
 		this.playerpane = new JPanel();
 		playerpane.setBorder(BorderFactory.createTitledBorder("football player"));
 		GridBagLayout gb = new GridBagLayout();
-		this.gb = gb;
 		GridBagConstraints c = new GridBagConstraints();
+		this.gb = gb;
 		this.c = c;
-		playerpane.setLayout(gb);
+		playerpane.setLayout(this.gb);
+
 		insertPlayer();
 		deletePlayer();
 		updatePlayer();
 		showPlayerStatic();
-		contentpane.add(playerpane);
+
+		JScrollPane playerscrollpane = new JScrollPane(playerpane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		playerscrollpane.setMinimumSize(new Dimension(600, 800));
+		playerscrollpane.setPreferredSize(new Dimension(600, 800));
+
+		contentpane.add(playerscrollpane);
 	}
 	private void insertPlayer(){
+		JPanel insplayerpane = new JPanel();
+		insplayerpane.setBorder(BorderFactory.createTitledBorder("insert"));
+		GridBagLayout gb = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		insplayerpane.setLayout(gb);
+
 		JButton insertButton = new JButton("insert player");
 		playerInsertButton = insertButton;
 		JLabel licenselbl, firstnamelbl, lastnamelbl, doblbl, nationlbl, jrynumlbl, golconcelbl, golsvdlbl, succtacklbl,
@@ -148,210 +165,223 @@ public class TransactionsWindow extends JFrame{
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(10, 10, 3, 0);
 		gb.setConstraints(licenselbl, c);
-		playerpane.add(licenselbl);
+		insplayerpane.add(licenselbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 0, 3, 10);
 		gb.setConstraints(player_licensenumtxt, c);
-		playerpane.add(player_licensenumtxt);
+		insplayerpane.add(player_licensenumtxt);
 
 		// place the firstname label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(firstnamelbl, c);
-		playerpane.add(firstnamelbl);
+		insplayerpane.add(firstnamelbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_firstnametxt, c);
-		playerpane.add(player_firstnametxt);
+		insplayerpane.add(player_firstnametxt);
 
 		// place the lastname label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(lastnamelbl, c);
-		playerpane.add(lastnamelbl);
+		insplayerpane.add(lastnamelbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_lastnametxt, c);
-		playerpane.add(player_lastnametxt);
+		insplayerpane.add(player_lastnametxt);
 
 		// place the date of birth label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(doblbl, c);
-		playerpane.add(doblbl);
+		insplayerpane.add(doblbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_dateofbirthtxt, c);
-		playerpane.add(player_dateofbirthtxt);
+		insplayerpane.add(player_dateofbirthtxt);
 
 		// place the nationality label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(nationlbl, c);
-		playerpane.add(nationlbl);
+		insplayerpane.add(nationlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_nationalitytxt, c);
-		playerpane.add(player_nationalitytxt);
+		insplayerpane.add(player_nationalitytxt);
 
 		// place the jerseynum label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(jrynumlbl, c);
-		playerpane.add(jrynumlbl);
+		insplayerpane.add(jrynumlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_jersynumtxt, c);
-		playerpane.add(player_jersynumtxt);
+		insplayerpane.add(player_jersynumtxt);
 
 		// place the goals conceded label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(golconcelbl, c);
-		playerpane.add(golconcelbl);
+		insplayerpane.add(golconcelbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_goalconcededtxt, c);
-		playerpane.add(player_goalconcededtxt);
+		insplayerpane.add(player_goalconcededtxt);
 
 		// place the goals saved label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(golsvdlbl, c);
-		playerpane.add(golsvdlbl);
+		insplayerpane.add(golsvdlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_goalsavedtxt, c);
-		playerpane.add(player_goalsavedtxt);
+		insplayerpane.add(player_goalsavedtxt);
 
 		// place the successful tackles label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(succtacklbl, c);
-		playerpane.add(succtacklbl);
+		insplayerpane.add(succtacklbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_succtackletxt, c);
-		playerpane.add(player_succtackletxt);
+		insplayerpane.add(player_succtackletxt);
 
 		// place the blocks label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(blklbl, c);
-		playerpane.add(blklbl);
+		insplayerpane.add(blklbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_blockstxt, c);
-		playerpane.add(player_blockstxt);
+		insplayerpane.add(player_blockstxt);
 
 		// place the clearances label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(clrlbl, c);
-		playerpane.add(clrlbl);
+		insplayerpane.add(clrlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_cleartxt, c);
-		playerpane.add(player_cleartxt);
+		insplayerpane.add(player_cleartxt);
 
 		// place the intercept label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(interceptlbl, c);
-		playerpane.add(interceptlbl);
+		insplayerpane.add(interceptlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_intercepttxt, c);
-		playerpane.add(player_intercepttxt);
+		insplayerpane.add(player_intercepttxt);
 
 		// place the recoveries label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(recoverlbl, c);
-		playerpane.add(recoverlbl);
+		insplayerpane.add(recoverlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_recoveriestxt, c);
-		playerpane.add(player_recoveriestxt);
+		insplayerpane.add(player_recoveriestxt);
 
 		// place the keypass label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(keypaslbl, c);
-		playerpane.add(keypaslbl);
+		insplayerpane.add(keypaslbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_keypasstxt, c);
-		playerpane.add(player_keypasstxt);
+		insplayerpane.add(player_keypasstxt);
 
 		// place the big chance label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(bigchancelbl, c);
-		playerpane.add(bigchancelbl);
+		insplayerpane.add(bigchancelbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_bigchancetxt, c);
-		playerpane.add(player_bigchancetxt);
+		insplayerpane.add(player_bigchancetxt);
 
 		// place the contract start label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(contractstartlbl, c);
-		playerpane.add(contractstartlbl);
+		insplayerpane.add(contractstartlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_contractstart, c);
-		playerpane.add(player_contractstart);
+		insplayerpane.add(player_contractstart);
 
 		// place the contract end label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(contractendlbl, c);
-		playerpane.add(contractendlbl);
+		insplayerpane.add(contractendlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_contractend, c);
-		playerpane.add(player_contractend);
+		insplayerpane.add(player_contractend);
 
 		// place the team id label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(teamIDlbl, c);
-		playerpane.add(teamIDlbl);
+		insplayerpane.add(teamIDlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_teamID, c);
-		playerpane.add(player_teamID);
+		insplayerpane.add(player_teamID);
 
 		// place the insert button
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
 		gb.setConstraints(insertButton, c);
-		playerpane.add(insertButton);
+		insplayerpane.add(insertButton);
 
 		insertButton.addActionListener(new BranchButtonListener());
+
+		// place panel inside playerpane
+		this.c.gridwidth = GridBagConstraints.REMAINDER;
+		this.c.insets = new Insets(0, 2, 0, 2);
+		this.c.anchor = GridBagConstraints.CENTER;
+		this.gb.setConstraints(insplayerpane, this.c);
+		playerpane.add(insplayerpane);
 	}
 	private void updatePlayer(){
+		JPanel upplayerpane = new JPanel();
+		upplayerpane.setBorder(BorderFactory.createTitledBorder("update"));
+		GridBagLayout gb = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		upplayerpane.setLayout(gb);
+
 		JButton updateButton = new JButton("update player");
 		playerUpdateButton = updateButton;
 		JLabel licenselbl, firstnamelbl, lastnamelbl, doblbl, nationlbl, jrynumlbl, golconcelbl, golsvdlbl, succtacklbl,
@@ -406,210 +436,223 @@ public class TransactionsWindow extends JFrame{
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(10, 10, 3, 0);
 		gb.setConstraints(licenselbl, c);
-		playerpane.add(licenselbl);
+		upplayerpane.add(licenselbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 0, 3, 10);
 		gb.setConstraints(player_uplicensenumtxt, c);
-		playerpane.add(player_uplicensenumtxt);
+		upplayerpane.add(player_uplicensenumtxt);
 
 		// place the firstname label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(firstnamelbl, c);
-		playerpane.add(firstnamelbl);
+		upplayerpane.add(firstnamelbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upfirstnametxt, c);
-		playerpane.add(player_upfirstnametxt);
+		upplayerpane.add(player_upfirstnametxt);
 
 		// place the lastname label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(lastnamelbl, c);
-		playerpane.add(lastnamelbl);
+		upplayerpane.add(lastnamelbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_uplastnametxt, c);
-		playerpane.add(player_uplastnametxt);
+		upplayerpane.add(player_uplastnametxt);
 
 		// place the date of birth label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(doblbl, c);
-		playerpane.add(doblbl);
+		upplayerpane.add(doblbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_updateofbirthtxt, c);
-		playerpane.add(player_updateofbirthtxt);
+		upplayerpane.add(player_updateofbirthtxt);
 
 		// place the nationality label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(nationlbl, c);
-		playerpane.add(nationlbl);
+		upplayerpane.add(nationlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upnationalitytxt, c);
-		playerpane.add(player_upnationalitytxt);
+		upplayerpane.add(player_upnationalitytxt);
 
 		// place the jerseynum label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(jrynumlbl, c);
-		playerpane.add(jrynumlbl);
+		upplayerpane.add(jrynumlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upjersynumtxt, c);
-		playerpane.add(player_upjersynumtxt);
+		upplayerpane.add(player_upjersynumtxt);
 
 		// place the goals conceded label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(golconcelbl, c);
-		playerpane.add(golconcelbl);
+		upplayerpane.add(golconcelbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upgoalconcededtxt, c);
-		playerpane.add(player_upgoalconcededtxt);
+		upplayerpane.add(player_upgoalconcededtxt);
 
 		// place the goals saved label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(golsvdlbl, c);
-		playerpane.add(golsvdlbl);
+		upplayerpane.add(golsvdlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upgoalsavedtxt, c);
-		playerpane.add(player_upgoalsavedtxt);
+		upplayerpane.add(player_upgoalsavedtxt);
 
 		// place the successful tackles label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(succtacklbl, c);
-		playerpane.add(succtacklbl);
+		upplayerpane.add(succtacklbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upsucctackletxt, c);
-		playerpane.add(player_upsucctackletxt);
+		upplayerpane.add(player_upsucctackletxt);
 
 		// place the blocks label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(blklbl, c);
-		playerpane.add(blklbl);
+		upplayerpane.add(blklbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upblockstxt, c);
-		playerpane.add(player_upblockstxt);
+		upplayerpane.add(player_upblockstxt);
 
 		// place the clearances label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(clrlbl, c);
-		playerpane.add(clrlbl);
+		upplayerpane.add(clrlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upcleartxt, c);
-		playerpane.add(player_upcleartxt);
+		upplayerpane.add(player_upcleartxt);
 
 		// place the intercept label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(interceptlbl, c);
-		playerpane.add(interceptlbl);
+		upplayerpane.add(interceptlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upintercepttxt, c);
-		playerpane.add(player_upintercepttxt);
+		upplayerpane.add(player_upintercepttxt);
 
 		// place the recoveries label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(recoverlbl, c);
-		playerpane.add(recoverlbl);
+		upplayerpane.add(recoverlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_uprecoveriestxt, c);
-		playerpane.add(player_uprecoveriestxt);
+		upplayerpane.add(player_uprecoveriestxt);
 
 		// place the keypass label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(keypaslbl, c);
-		playerpane.add(keypaslbl);
+		upplayerpane.add(keypaslbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upkeypasstxt, c);
-		playerpane.add(player_upkeypasstxt);
+		upplayerpane.add(player_upkeypasstxt);
 
 		// place the big chance label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(bigchancelbl, c);
-		playerpane.add(bigchancelbl);
+		upplayerpane.add(bigchancelbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upbigchancetxt, c);
-		playerpane.add(player_upbigchancetxt);
+		upplayerpane.add(player_upbigchancetxt);
 
 		// place the contract start label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(contractstartlbl, c);
-		playerpane.add(contractstartlbl);
+		upplayerpane.add(contractstartlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upcontractstart, c);
-		playerpane.add(player_upcontractstart);
+		upplayerpane.add(player_upcontractstart);
 
 		// place the contract end label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(contractendlbl, c);
-		playerpane.add(contractendlbl);
+		upplayerpane.add(contractendlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upcontractend, c);
-		playerpane.add(player_upcontractend);
+		upplayerpane.add(player_upcontractend);
 
 		// place the team id label
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(teamIDlbl, c);
-		playerpane.add(teamIDlbl);
+		upplayerpane.add(teamIDlbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(player_upteamID, c);
-		playerpane.add(player_upteamID);
+		upplayerpane.add(player_upteamID);
 
 		// place the insert button
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
 		gb.setConstraints(updateButton, c);
-		playerpane.add(updateButton);
+		upplayerpane.add(updateButton);
 
 		updateButton.addActionListener(new BranchButtonListener());
+
+		// place panel inside playerpane
+		this.c.gridwidth = GridBagConstraints.REMAINDER;
+		this.c.insets = new Insets(0, 2, 0, 2);
+		this.c.anchor = GridBagConstraints.CENTER;
+		this.gb.setConstraints(upplayerpane, this.c);
+		playerpane.add(upplayerpane);
 	}
 	private void deletePlayer(){
+		JPanel delplayerpane = new JPanel();
+		delplayerpane.setBorder(BorderFactory.createTitledBorder("delete"));
+		GridBagLayout gb = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		delplayerpane.setLayout(gb);
+
 		JButton deleteButton = new JButton("delete player");
 		playerDeleteButton = deleteButton;
 		JLabel licenselbl;
@@ -624,43 +667,61 @@ public class TransactionsWindow extends JFrame{
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(10, 10, 5, 0);
 		gb.setConstraints(licenselbl, c);
-		playerpane.add(licenselbl);
+		delplayerpane.add(licenselbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 0, 5, 10);
 		gb.setConstraints(player_dellicensenumtxt, c);
-		playerpane.add(player_dellicensenumtxt);
+		delplayerpane.add(player_dellicensenumtxt);
 
 		// place the delete button
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
 		gb.setConstraints(deleteButton, c);
-		playerpane.add(deleteButton);
+		delplayerpane.add(deleteButton);
 
 		deleteButton.addActionListener(new BranchButtonListener());
 
+		// place panel inside playerpane
+		this.c.gridwidth = GridBagConstraints.REMAINDER;
+		this.c.insets = new Insets(0, 2, 0, 2);
+		this.c.anchor = GridBagConstraints.CENTER;
+		this.gb.setConstraints(delplayerpane, this.c);
+		playerpane.add(delplayerpane);
 	}
 	private void showPlayerStatic(){
+		JPanel showplayerpane = new JPanel();
+		showplayerpane.setBorder(BorderFactory.createTitledBorder("show"));
+		GridBagLayout gb = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		showplayerpane.setLayout(gb);
+
 		JButton showButton = new JButton("show player");
 		playerShowButton = showButton;
 		playerTable = new JTextArea(10,40);
 
 		// place the Textarea
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(10, 10, 5, 0);
+		c.insets = new Insets(10, 10, 5, 10);
 		gb.setConstraints(playerTable, c);
-		playerpane.add(playerTable);
+		showplayerpane.add(playerTable);
 
 		// place the show button
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
 		gb.setConstraints(showButton, c);
-		playerpane.add(showButton);
+		showplayerpane.add(showButton);
 
 		showButton.addActionListener(new BranchButtonListener());
 
+		// place panel inside playerpane
+		this.c.gridwidth = GridBagConstraints.REMAINDER;
+		this.c.insets = new Insets(0, 2, 0, 2);
+		this.c.anchor = GridBagConstraints.CENTER;
+		this.gb.setConstraints(showplayerpane, this.c);
+		playerpane.add(showplayerpane);
 	}
 	private void showPlayerDynamic(FootballPlayerModel[] models){
 		playerTable.setText("");
