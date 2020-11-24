@@ -1,5 +1,5 @@
 CREATE TABLE FootballPlayer_PlaysFor (
-    jerseyNum int NOT NUll, 
+    jerseyNum int NOT NUll PRIMARY KEY,
     firstName Char (50) NOT NUll, 
     lastName Char(30) NOT NUll,
     nationality char(50) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE Team_HasManages(
     phoneNum int,
     website char(100),
     teamName char(40) NOT NULL, 
-    teamID char(50), 
+    teamID char(50) PRIMARY KEY,
 
     since char (8) NOT NULL, 
     managername char(50) NOT NUll, 
@@ -48,7 +48,7 @@ CREATE TABLE Arena(
 
 CREATE TABLE Arenaaddy(
     arenaCity Char(20) NOT NULL,
-    arena1Address Char(20) NOT NULL, 
+    arena1Address Char(20) NOT NULL PRIMARY KEY,
     FOREIGN KEY (arena1Address) REFERENCES Arena(arenaAddressy)
 ); 
 -- FOREIGN KEY (arena1Address) REFERENCES Arena(arenaAddress)
