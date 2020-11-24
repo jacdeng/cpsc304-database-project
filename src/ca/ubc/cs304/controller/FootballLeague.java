@@ -8,6 +8,8 @@ import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TransactionsTerminal;
 import ca.ubc.cs304.ui.TransactionsWindow;
 
+import java.util.ArrayList;
+
 /**
  * This is the main controller class that will orchestrate everything.
  */
@@ -59,7 +61,7 @@ public class FootballLeague implements LoginWindowDelegate, TransactionsWindowDe
 	 * Start of Special Transactions:
 	 */
 	public void getteamNameIDandNum(){dbHandler.getteamNameIDandNum();};
-	public void selectteamplayers(int wantedTeamID) {dbHandler.selectteamplayers( wantedTeamID);};
+	public ArrayList<FootballPlayerModel> selectteamplayers(int wantedTeamID) {dbHandler.selectteamplayers( wantedTeamID);};
 	public void getEligibleSquads(){dbHandler.getEligibleSquads();};
 	public void getteamsforarena(String city){dbHandler.getteamsforarena( city);};
 	public void GGOAT(){dbHandler.GGOAT();};

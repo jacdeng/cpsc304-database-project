@@ -20,8 +20,6 @@ public class TransactionsWindow extends JFrame{
 	private GridBagConstraints c;
 
 	private JPanel contentpane;
-	private JPanel masterpane;
-	private JScrollPane masterscrollpane;
 
 	// delegate
 	private TransactionsWindowDelegate delegate;

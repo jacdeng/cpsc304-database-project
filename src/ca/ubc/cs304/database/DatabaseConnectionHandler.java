@@ -51,6 +51,8 @@ public class DatabaseConnectionHandler {
 	 * Projecting a teamName, TeamID and Phonenumber of a particular team
 	 * Input: teamName, TeamID, Phonenumber
 	 * Output: List of teams with the columns teamName, teamID, Phonenumber.
+	 *
+	 * PRIO 2
 	 */
 
 
@@ -97,6 +99,8 @@ public class DatabaseConnectionHandler {
 	 * Selection is for a team, and you may select the payers on a given team.
 	 * Input: teamID (Primary Key)
 	 * Output: List of Players on the teamID
+	 *
+	 * PRIO 1
 	 */
 	public ArrayList<FootballPlayerModel> selectteamplayers(int wantedTeamID){
 //		// Making new list of football players to output.
@@ -240,6 +244,8 @@ public class DatabaseConnectionHandler {
 	 * the teams that are located in that city and use the arena as their home arena.
 	 * Input: String: City
 	 * Output: Arraylist of teamname, teamID and PhoneNum.
+	 *
+	 * PRIO 3
 	 */
 
 	public ArrayList<ModifiedTeamModel>getteamsforarena(String city){

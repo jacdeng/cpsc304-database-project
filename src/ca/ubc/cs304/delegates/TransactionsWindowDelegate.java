@@ -3,6 +3,8 @@ package ca.ubc.cs304.delegates;
 import ca.ubc.cs304.model.BranchModel;
 import ca.ubc.cs304.model.FootballPlayerModel;
 
+import java.util.ArrayList;
+
 /**
  * This interface uses the delegation design pattern where instead of having
  * the TerminalTransactions class try to do everything, it will only
@@ -31,7 +33,7 @@ public interface TransactionsWindowDelegate {
 									 int licenseNum, String contractStart, String contractEnd, int teamID);
 
 	public void getteamNameIDandNum();
-	public void selectteamplayers(int wantedTeamID);
+	public ArrayList<FootballPlayerModel> selectteamplayers(int wantedTeamID);
 	public void getEligibleSquads();
 	public void getteamsforarena(String city);
 	public void GGOAT();
