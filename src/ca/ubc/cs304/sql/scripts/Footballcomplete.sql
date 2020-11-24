@@ -50,7 +50,31 @@ CREATE TABLE Arenaaddy(
     arenaCity Char(20) NOT NULL,
     arena1Address Char(20) NOT NULL PRIMARY KEY,
     FOREIGN KEY (arena1Address) REFERENCES Arena(arenaAddressy)
-); 
+);
+
+
+
+INSERT INTO Team_HasManages(phoneNum, website, teamName, teamID, since, managername, contractStart, contractEnd, licenseNum)
+VALUES (32,'hgfd','ghj','6543','ghj','dfghj','fghj','cvbn', 132);
+
+INSERT INTO Team_HasManages(phoneNum, website, teamName, teamID, since, managername, contractStart, contractEnd, licenseNum)
+VALUES (654,'hgf','cvbh', 7654,'gfds','wer','ghfd','gfds', 232);
+
+INSERT INTO Team_HasManages(phoneNum, website, teamName, teamID, since, managername, contractStart, contractEnd, licenseNum)
+VALUES(8765,'hgfd','gfds', 98765, 'ytre','jhgfds','nbvcx','ytrew', 332);
+
+
+
+
+-- INSERT INTO Team_HasManages (phoneNum, website, teamName, teamID, since, managername, contractStart, contractEnd, licenseNum)
+-- VALUES (654,"hgf","cvbh", 7654,"gfds","wer","ghfd","gfds", 232);
+--
+-- INSERT INTO Team_HasManages (phoneNum, website, teamName, teamID, since, managername, contractStart, contractEnd, licenseNum)
+-- VALUES(8765,"hgfd","gfds", 98765, "ytre","jhgfds","nbvcx","ytrew", 332);
+
+-- , ,
+-- (8765,"hgfd","gfds", 98765, "ytre","jhgfds","nbvcx","ytrew",3);
+
 -- FOREIGN KEY (arena1Address) REFERENCES Arena(arenaAddress)
 -- CREATE TABLE Coach (
 --     nationality Char(20) NOT NULL,
