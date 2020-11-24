@@ -1633,6 +1633,12 @@ public class DatabaseConnectionHandler {
 				if(rs.getString(1).toUpperCase().equals("TEAM_HASMANAGES")) {
 					stmt.execute("DROP TABLE TEAM_HASMANAGES");
 				}
+				if(rs.getString(1).toUpperCase().equals("ARENA")) {
+					stmt.execute("DROP TABLE ARENA");
+				}
+				if(rs.getString(1).toUpperCase().equals("ARENAADDY")) {
+					stmt.execute("DROP TABLE ARENAADDY");
+				}
 			}
 			
 			rs.close();
