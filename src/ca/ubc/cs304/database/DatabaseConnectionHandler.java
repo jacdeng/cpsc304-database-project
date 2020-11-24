@@ -1523,34 +1523,183 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
-	public void updateFootballPlayer(int jerseyNum, String firstName, String lastName, String nationality, String dateOfBirth, int goalsConceded, int goalsSaved, int bigChances, int keyPasses, int interceptions, int recoveries, int successfulTackles, int blocks, int clearances, int licenseNum, String contractStart, String contractEnd, int teamID) {
+	public void updateFootballPlayer(int jerseyNum, String firstName, String lastName, String nationality, String dateOfBirth, int goalsConceded, int goalsSaved, int bigChances, int keyPasses, int interceptions, int recoveries, int successfulTackles, int blocks, int clearances, int licenceNum, String contractStart, String contractEnd, int teamID) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET jerseyNum = ?,firstName = ?,lastName = ?,nationality = ?,dateOfBirth = ?,goalsConceded = ?,goalsSaved = ?,bigChances = ?,keyPasses = ?,interceptions = ?,recoveries = ?,successfulTackles = ?,blocks = ?,clearances = ?,licenseNum = ?,contractStart = ?,contractEnd = ?,teamID = ? WHERE licenseNum = ?");
+			PreparedStatement ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET jerseyNum = ? WHERE licenceNum = ?");
 			ps.setInt(1, jerseyNum);
-			ps.setString(2, firstName);
-			ps.setString(3, lastName);
-			ps.setString(4, nationality);
-			ps.setString(5, dateOfBirth);
-
-			ps.setInt(6, goalsConceded);
-			ps.setInt(7, goalsSaved);
-			ps.setInt(8, bigChances);
-			ps.setInt(9, keyPasses);
-			ps.setInt(10, interceptions);
-			ps.setInt(11, recoveries);
-			ps.setInt(12, successfulTackles);
-			ps.setInt(13, blocks);
-			ps.setInt(14, clearances);
-
-			ps.setInt(15, licenseNum);
-
-			ps.setString(16, contractStart);
-			ps.setString(17, contractEnd);
-			ps.setInt(18, teamID);
-
+			ps.setInt(2, licenceNum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Player " + licenseNum + " does not exist!");
+				System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+			}
+
+			if(!firstName.equals("")) {
+				PreparedStatement ps1 = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET firstname = ? WHERE licenceNum = ?");
+				ps1.setString(1, firstName);
+				ps1.setInt(2, licenceNum);
+				rowCount = ps1.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(!lastName.equals("")) {
+				PreparedStatement ps2 = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET lastname = ? WHERE licenceNum = ?");
+				ps2.setString(1, lastName);
+				ps2.setInt(2, licenceNum);
+				rowCount = ps2.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(!nationality.equals("")) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET nationality = ? WHERE licenceNum = ?");
+				ps.setString(1, nationality);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(!dateOfBirth.equals("")) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET dateOfBirth = ? WHERE licenceNum = ?");
+				ps.setString(1, dateOfBirth);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(!dateOfBirth.equals("")) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET dateOfBirth = ? WHERE licenceNum = ?");
+				ps.setString(1, dateOfBirth);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(goalsConceded != -1) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET goalsConceded = ? WHERE licenceNum = ?");
+				ps.setInt(1, goalsConceded);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(goalsSaved != -1) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET goalsSaves = ? WHERE licenceNum = ?");
+				ps.setInt(1, goalsSaved);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(bigChances != -1) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET bigChances = ? WHERE licenceNum = ?");
+				ps.setInt(1, bigChances);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(keyPasses != -1) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET keypasses = ? WHERE licenceNum = ?");
+				ps.setInt(1, keyPasses);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(interceptions != -1) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET interceptions = ? WHERE licenceNum = ?");
+				ps.setInt(1, interceptions);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(recoveries != -1) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET recoveries = ? WHERE licenceNum = ?");
+				ps.setInt(1, recoveries);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(successfulTackles != -1) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET successfulTackles = ? WHERE licenceNum = ?");
+				ps.setInt(1, successfulTackles);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(blocks != -1) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET blocks = ? WHERE licenceNum = ?");
+				ps.setInt(1, blocks);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(clearances != -1) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET clearances = ? WHERE licenceNum = ?");
+				ps.setInt(1, clearances);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(!contractStart.equals("")) {
+				PreparedStatement ps1 = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET contractStart = ? WHERE licenceNum = ?");
+				ps1.setString(1, contractStart);
+				ps1.setInt(2, licenceNum);
+				rowCount = ps1.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+			if(!contractEnd.equals("")) {
+				PreparedStatement ps1 = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET contractEnd = ? WHERE licenceNum = ?");
+				ps1.setString(1, contractEnd);
+				ps1.setInt(2, licenceNum);
+				rowCount = ps1.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
+			}
+
+			if(teamID != -1) {
+				ps = connection.prepareStatement("UPDATE FootballPlayer_PlaysFor SET teamID = ? WHERE licenceNum = ?");
+				ps.setInt(1, teamID);
+				ps.setInt(2, licenceNum);
+				rowCount = ps.executeUpdate();
+				if (rowCount == 0) {
+					System.out.println(WARNING_TAG + " Player " + licenceNum + " does not exist!");
+				}
 			}
 
 			connection.commit();
