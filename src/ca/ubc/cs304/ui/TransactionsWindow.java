@@ -839,6 +839,8 @@ public class TransactionsWindow extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == playerInsertButton){
+				System.out.print("trying to insert player \n");
+
 				int golconc;
 				int golsav;
 				int chanc;
@@ -849,55 +851,55 @@ public class TransactionsWindow extends JFrame{
 				int blk;
 				int clr;
 
-				if(player_goalconcededtxt.getText() == null){
+				if(player_goalconcededtxt.getText().equals("")){
 					golconc = -1;
 				}else{
 					golconc = Integer.parseInt(player_goalconcededtxt.getText());
 				}
 
-				if(player_goalsavedtxt.getText() == null){
+				if(player_goalsavedtxt.getText().equals("")){
 					golsav = -1;
 				}else{
 					golsav = Integer.parseInt(player_goalsavedtxt.getText());
 				}
 
-				if(player_bigchancetxt.getText() == null){
+				if(player_bigchancetxt.getText().equals("")){
 					chanc = -1;
 				}else{
 					chanc = Integer.parseInt(player_bigchancetxt.getText());
 				}
 
-				if(player_keypasstxt.getText() == null){
+				if(player_keypasstxt.getText().equals("")){
 					keypas = -1;
 				}else{
 					keypas = Integer.parseInt(player_keypasstxt.getText());
 				}
 
-				if(player_intercepttxt.getText() == null){
+				if(player_intercepttxt.getText().equals("")){
 					inter = -1;
 				}else{
 					inter = Integer.parseInt(player_intercepttxt.getText());
 				}
 
-				if(player_recoveriestxt.getText() == null){
+				if(player_recoveriestxt.getText().equals("")){
 					recover = -1;
 				}else{
 					recover = Integer.parseInt(player_recoveriestxt.getText());
 				}
 
-				if(player_succtackletxt.getText() == null){
+				if(player_succtackletxt.getText().equals("")){
 					succtack = -1;
 				}else{
 					succtack = Integer.parseInt(player_succtackletxt.getText());
 				}
 
-				if(player_blockstxt.getText() == null){
+				if(player_blockstxt.getText().equals("")){
 					blk = -1;
 				}else{
 					blk = Integer.parseInt(player_blockstxt.getText());
 				}
 
-				if(player_cleartxt.getText() == null){
+				if(player_cleartxt.getText().equals("")){
 					clr = -1;
 				}else{
 					clr = Integer.parseInt(player_cleartxt.getText());
@@ -927,6 +929,7 @@ public class TransactionsWindow extends JFrame{
 			} else if (e.getSource() == playerShowButton){
 				System.out.print("trying to get table \n");
 				FootballPlayerModel[] models = delegate.getPlayers();
+				System.out.print("got model \n");
 				showPlayerDynamic(models);
 			}else if(e.getSource() == playerUpdateButton){
 				int jerseynum;

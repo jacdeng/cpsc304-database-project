@@ -551,7 +551,7 @@ public class DatabaseConnectionHandler {
 
 	public void deleteFootballPlayer (int licencenum){
 		try {
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM FootballPlayer_PlaysFor WHERE name = ?");
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM FootballPlayer_PlaysFor WHERE licenceNum = ?");
 			ps.setInt(1, licencenum);
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
@@ -1224,15 +1224,15 @@ public class DatabaseConnectionHandler {
 			int tempClearances;
 
 			while(rs.next()) {
-				if (rs.getInt("FootballPlayer_PlaysFor_goalsConcede") == 0) {
+				if (rs.getInt("FootballPlayer_PlaysFor_goalsConceded") == 0) {
 					tempGoalsConcede = -1;
 				} else {
-					tempGoalsConcede = rs.getInt("FootballPlayer_PlaysFor_goalsConcede");
+					tempGoalsConcede = rs.getInt("FootballPlayer_PlaysFor_goalsConceded");
 				}
-				if (rs.getInt("FootballPlayer_PlaysFor_goalsSaved") == 0) {
+				if (rs.getInt("FootballPlayer_PlaysFor_goalsSaves") == 0) {
 					tempGoalsSaved = -1;
 				} else {
-					tempGoalsSaved = rs.getInt("FootballPlayer_PlaysFor_goalsSaved");
+					tempGoalsSaved = rs.getInt("FootballPlayer_PlaysFor_goalsSaves");
 				}
 				if (rs.getInt("FootballPlayer_PlaysFor_bigChances") == 0) {
 					tempBigChances = -1;
@@ -1624,25 +1624,21 @@ public class DatabaseConnectionHandler {
 	private void dropBranchTableIfExists() {
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("select table_name from user_tables");
-			
-			while(rs.next()) {
-				if(rs.getString(1).toUpperCase().equals("FOOTBALLPLAYER_PLAYSFOR")) {
-					stmt.execute("DROP TABLE FOOTBALLPLAYER_PLAYSFOR");
-				}
-				if(rs.getString(1).toUpperCase().equals("TEAM_HASMANAGES")) {
-					stmt.execute("DROP TABLE TEAM_HASMANAGES");
-				}
-				if(rs.getString(1).toUpperCase().equals("ARENA")) {
-					stmt.execute("DROP TABLE ARENA");
-				}
-				if(rs.getString(1).toUpperCase().equals("ARENAADDY")) {
-					stmt.execute("DROP TABLE ARENAADDY");
-				}
-			}
-			
-			rs.close();
+			stmt.execute("DROP TABLE FOOTBALLPLAYER_PLAYSFOR");
 			stmt.close();
+
+			Statement stmt1 = connection.createStatement();
+			stmt1.execute("DROP TABLE TEAM_HASMANAGES");
+			stmt1.close();
+
+			Statement stmt2 = connection.createStatement();
+			stmt2.execute("DROP TABLE ARENAADDY");
+			stmt2.close();
+
+			Statement stmt3 = connection.createStatement();
+			stmt3.execute("DROP TABLE ARENA");
+			stmt3.close();
+
 		} catch (SQLException e) {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
