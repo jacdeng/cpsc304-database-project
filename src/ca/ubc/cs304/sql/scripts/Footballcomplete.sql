@@ -29,7 +29,7 @@ CREATE TABLE Team_HasManages(
     teamID char(50) PRIMARY KEY,
 
     since char (8) NOT NULL, 
-    managername char(50) NOT NUll, 
+    arenaname char(50) NOT NUll,
 
     contractStart char(8) NOT NULL, 
     contractEnd char(8) NOT NULL, 
