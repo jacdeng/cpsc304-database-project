@@ -40,6 +40,7 @@ public class TransactionsWindow extends JFrame{
 	private JButton playerUpdateButton;
 	private JButton playerShowButton;
 	private JTextArea playerTable;
+	private JTextField arenanametxt;
 
 	//constructor
 	public TransactionsWindow(){ super("Transactions Window");}
@@ -93,6 +94,7 @@ public class TransactionsWindow extends JFrame{
 		deletePlayer();
 		updatePlayer();
 		showPlayerStatic();
+		getteamsforarena();
 
 		JScrollPane playerscrollpane = new JScrollPane(playerpane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -100,6 +102,47 @@ public class TransactionsWindow extends JFrame{
 		playerscrollpane.setPreferredSize(new Dimension(600, 800));
 
 		contentpane.add(playerscrollpane);
+	}
+	private void getteamsforarena() {
+		JPanel insplayerpane = new JPanel();
+		insplayerpane.setBorder(BorderFactory.createTitledBorder("get teams"));
+		GridBagLayout gb = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		insplayerpane.setLayout(gb);
+
+		JButton insertButton = new JButton("get teams");
+		JLabel arenalbl;
+		arenalbl = new JLabel("enter the arena to search");
+
+		arenanametxt = new JTextField(TEXT_FIELD_WIDTH);
+
+		// place the firstname label
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(arenalbl, c);
+		insplayerpane.add(arenalbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(arenanametxt, c);
+		insplayerpane.add(arenanametxt);
+
+		// place the insert button
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(2, 10, 15, 10);
+		c.anchor = GridBagConstraints.CENTER;
+		gb.setConstraints(insertButton, c);
+		insplayerpane.add(insertButton);
+
+		insertButton.addActionListener(new BranchButtonListener());
+
+		// place panel inside playerpane
+		this.c.gridwidth = GridBagConstraints.REMAINDER;
+		this.c.insets = new Insets(0, 2, 0, 2);
+		this.c.anchor = GridBagConstraints.CENTER;
+		this.gb.setConstraints(insplayerpane, this.c);
+		playerpane.add(insplayerpane);
+
 	}
 	private void insertPlayer(){
 		JPanel insplayerpane = new JPanel();
