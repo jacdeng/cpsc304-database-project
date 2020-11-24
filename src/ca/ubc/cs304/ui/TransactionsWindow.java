@@ -44,12 +44,15 @@ public class TransactionsWindow extends JFrame{
 	private JTextField arenanametxt;
 	private JTextArea arenaTable;
 
+	// GOAT FIELDS
 	private JButton getGOATButton;
-	private JTextArea goattxt;
+	private JTextArea goatretArea;
 
+	// get elig team FIELDS
 	private JButton getEligButton;
 	private JTextArea getEligtxt;
 
+	// select player based on team FIELDS
 	private JButton selectTeamPlayersButton;
 	private JTextField selectPlayerstxt;
 	private JTextArea selectPlayersTable;
@@ -221,7 +224,6 @@ public class TransactionsWindow extends JFrame{
 		playerpane.update(getEligtxt.getGraphics());
 	}
 
-
 	private void GetGOAT(){
 		// Creating a new panel to store the goat
 		JPanel goatplayerpane = new JPanel();
@@ -234,14 +236,14 @@ public class TransactionsWindow extends JFrame{
 		JButton goatButton = new JButton("get GOAT");
 		getGOATButton = goatButton;
 
-		goattxt = new JTextArea(20,80);
-		goattxt.setEditable(false);
+		goatretArea = new JTextArea(20,80);
+		goatretArea.setEditable(false);
 
 		// place the Textarea
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 10, 5, 10);
-		gb.setConstraints(goattxt, c);
-		goatplayerpane.add(goattxt);
+		gb.setConstraints(goatretArea, c);
+		goatplayerpane.add(goatretArea);
 
 		// place the insert button to submit the form
 		c.gridwidth = GridBagConstraints.REMAINDER;
@@ -260,9 +262,9 @@ public class TransactionsWindow extends JFrame{
 		playerpane.add(goatplayerpane);
 	}
 	private void goatDynamic(ModifiedFootballPlayer[] models){
-		goattxt.setText("");
-		goattxt.append(parsemodplayerTable(models));
-		playerpane.update(goattxt.getGraphics());
+		goatretArea.setText("");
+		goatretArea.append(parsemodplayerTable(models));
+		playerpane.update(goatretArea.getGraphics());
 	}
 	private String parsemodplayerTable(ModifiedFootballPlayer[] models){
 		StringBuilder sb = new StringBuilder();
