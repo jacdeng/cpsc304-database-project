@@ -9,11 +9,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.*;
 
 import ca.ubc.cs304.delegates.TransactionsWindowDelegate;
-import ca.ubc.cs304.model.BranchModel;
 import ca.ubc.cs304.model.FootballPlayerModel;
 import ca.ubc.cs304.model.ModifiedFootballPlayer;
 import ca.ubc.cs304.model.ModifiedTeamModel;
-import com.sun.tools.javac.comp.Flow;
 
 public class TransactionsWindow extends JFrame{
 	private static final int TEXT_FIELD_WIDTH = 10;
@@ -49,10 +47,15 @@ public class TransactionsWindow extends JFrame{
 	private JButton getGOATButton;
 	private JTextArea goattxt;
 
+	private JButton getEligButton;
+	private JTextArea getEligtxt;
+
+	private JButton selectTeamPlayersButton;
+	private JTextField selectPlayerstxt;
+	private JTextArea selectPlayerstxt;
+
 	// get teams
 	private JButton getteamsButton;
-
-	private JButton getPlayersButton;
 
 	//constructor
 	public TransactionsWindow(){ super("Transactions Window");}
@@ -106,10 +109,9 @@ public class TransactionsWindow extends JFrame{
 		deletePlayer();
 		updatePlayer();
 		showPlayerStatic();
-		getteamsforarena();
 		GetGOAT();
 		GetEligsqd();
-		selectTeamPlayers();
+//		selectTeamPlayers();
 
 		JScrollPane playerscrollpane = new JScrollPane(playerpane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -169,11 +171,10 @@ public class TransactionsWindow extends JFrame{
 		this.c.anchor = GridBagConstraints.CENTER;
 		this.gb.setConstraints(selectTeamPlayerpane, this.c);
 		playerpane.add(selectTeamPlayerpane);
-
 	}
 
 	private void GetEligsqd(){
-		// Creating a new panel to store the goat
+		// Creating a new panel to store the eligible squads (no input)
 		JPanel eligsqdpane = new JPanel();
 		eligsqdpane.setBorder(BorderFactory.createTitledBorder("get eligible squad"));
 		GridBagLayout gb = new GridBagLayout();
@@ -181,26 +182,26 @@ public class TransactionsWindow extends JFrame{
 		eligsqdpane.setLayout(gb);
 
 		// Creating the button for the input field
-		JButton goatButton = new JButton("get eligible squad");
-		getGOATButton = goatButton;
+		JButton eligibleButton = new JButton("get eligible squad");
+		getEligButton = eligibleButton;
 
-		goattxt = new JTextArea(20,80);
-		goattxt.setEditable(false);
+		getEligtxt = new JTextArea(20,80);
+		getEligtxt.setEditable(false);
 
 		// place the Textarea
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 10, 5, 10);
-		gb.setConstraints(goattxt, c);
-		eligsqdpane.add(goattxt);
+		gb.setConstraints(getEligtxt, c);
+		eligsqdpane.add(getEligtxt);
 
-		// place the insert button to submit the form
+		// place the button to get the eligible squads
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
-		gb.setConstraints(goatButton, c);
-		eligsqdpane.add(goatButton);
+		gb.setConstraints(eligibleButton, c);
+		eligsqdpane.add(eligibleButton);
 
-		getGOATButton.addActionListener(new BranchButtonListener());
+		getEligButton.addActionListener(new BranchButtonListener());
 
 		// place panel inside playerpane
 		this.c.gridwidth = GridBagConstraints.REMAINDER;
@@ -209,6 +210,13 @@ public class TransactionsWindow extends JFrame{
 		this.gb.setConstraints(eligsqdpane, this.c);
 		playerpane.add(eligsqdpane);
 	}
+	private void eligsqddynamic(ModifiedTeamModel[] models){
+		getEligtxt.setText("");
+		getEligtxt.append(parseModifiedTeamTable(models));
+		playerpane.update(getEligtxt.getGraphics());
+	}
+
+
 	private void GetGOAT(){
 		// Creating a new panel to store the goat
 		JPanel goatplayerpane = new JPanel();
@@ -273,6 +281,7 @@ public class TransactionsWindow extends JFrame{
 		sb.append("] \n ");
 		return sb.toString();
 	}
+
 	private void getteamsforarena() {
 		// Creating a new panel to store the arena
 		JPanel getteamforarenapane = new JPanel();
@@ -328,19 +337,19 @@ public class TransactionsWindow extends JFrame{
 	}
 	private void arenaDynamic(ModifiedTeamModel[] models){
 		arenaTable.setText("");
-		arenaTable.append(parsearenaTable(models));
+		arenaTable.append(parseModifiedTeamTable(models));
 		playerpane.update(arenaTable.getGraphics());
 	}
-	private String parsearenaTable(ModifiedTeamModel[] models){
+	private String parseModifiedTeamTable(ModifiedTeamModel[] models){
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<models.length; i++){
-			String str = parsearenaModel(models[i]);
+			String str = parseTeamModel(models[i]);
 			sb.append(str);
 			sb.append("\n");
 		}
 		return sb.toString();
 	}
-	private String parsearenaModel(ModifiedTeamModel model) {
+	private String parseTeamModel(ModifiedTeamModel model) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("  [ ");
 		sb.append(model.getTeamName());
@@ -1320,7 +1329,12 @@ public class TransactionsWindow extends JFrame{
 				System.out.print("Getting goats ");
 				ModifiedFootballPlayer[] models = delegate.GGOAT();
 				goatDynamic(models);
-			}else{
+			}else if (e.getSource() == getEligButton) {
+				System.out.print("Getting eligible teams with member > 12 ");
+				ModifiedTeamModel[] models = delegate.getEligibleSquads();
+				eligsqddynamic(models);
+			}
+			else{
 				System.out.print("ugh something is wrong \n");
 			}
 		}

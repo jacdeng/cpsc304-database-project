@@ -55,8 +55,6 @@ public class DatabaseConnectionHandler {
 	 * PRIO 2
 	 */
 
-
-
 	public ArrayList<ModifiedTeamModel> getteamNameIDandNum(){
 
 		ArrayList<ModifiedTeamModel> result = new ArrayList<>();
