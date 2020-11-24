@@ -11,6 +11,7 @@ import javax.swing.*;
 import ca.ubc.cs304.delegates.TransactionsWindowDelegate;
 import ca.ubc.cs304.model.BranchModel;
 import ca.ubc.cs304.model.FootballPlayerModel;
+import ca.ubc.cs304.model.ModifiedTeamModel;
 import com.sun.tools.javac.comp.Flow;
 
 public class TransactionsWindow extends JFrame{
@@ -41,6 +42,7 @@ public class TransactionsWindow extends JFrame{
 	private JButton playerShowButton;
 	private JTextArea playerTable;
 	private JTextField arenanametxt;
+	private JTextArea arenaTable;
 
 	// get teams
 	private JButton getteamsButton;
@@ -107,12 +109,14 @@ public class TransactionsWindow extends JFrame{
 		contentpane.add(playerscrollpane);
 	}
 	private void getteamsforarena() {
+		// Creating a new panel to store the arena
 		JPanel insplayerpane = new JPanel();
 		insplayerpane.setBorder(BorderFactory.createTitledBorder("get teams"));
 		GridBagLayout gb = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		insplayerpane.setLayout(gb);
 
+		// Creating the button for the input field
 		JButton insertButton = new JButton("get teams");
 		getteamsButton = insertButton;
 		JLabel arenalbl;
@@ -120,7 +124,7 @@ public class TransactionsWindow extends JFrame{
 
 		arenanametxt = new JTextField(TEXT_FIELD_WIDTH);
 
-		// place the firstname label
+		// place the label for the text field
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(arenalbl, c);
@@ -131,7 +135,7 @@ public class TransactionsWindow extends JFrame{
 		gb.setConstraints(arenanametxt, c);
 		insplayerpane.add(arenanametxt);
 
-		// place the insert button
+		// place the insert button to submit the form
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
@@ -139,6 +143,30 @@ public class TransactionsWindow extends JFrame{
 		insplayerpane.add(insertButton);
 
 		// TODO: textarea here
+		arenaTable = new JTextArea(30,50);
+		arenaTable.setEditable(false);
+
+		// place the Textarea
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(10, 10, 5, 10);
+		gb.setConstraints(arenaTable, c);
+		insplayerpane.add(arenaTable);
+
+		// place the show button
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(2, 10, 15, 10);
+		c.anchor = GridBagConstraints.CENTER;
+		gb.setConstraints(insertButton, c);
+		insplayerpane.add(insertButton);
+
+		insertButton.addActionListener(new BranchButtonListener());
+
+		// place panel inside playerpane
+		this.c.gridwidth = GridBagConstraints.REMAINDER;
+		this.c.insets = new Insets(0, 2, 0, 2);
+		this.c.anchor = GridBagConstraints.CENTER;
+		this.gb.setConstraints(insplayerpane, this.c);
+		playerpane.add(insplayerpane);
 
 		getteamsButton.addActionListener(new BranchButtonListener());
 
@@ -149,7 +177,38 @@ public class TransactionsWindow extends JFrame{
 		this.gb.setConstraints(insplayerpane, this.c);
 		playerpane.add(insplayerpane);
 
+
+
 	}
+	private void arenaDynamic(ModifiedTeamModel[] models){
+		arenaTable.setText("");
+		arenaTable.append(parsearenaTable(models));
+		playerpane.update(arenaTable.getGraphics());
+
+	}
+	private String parsearenaTable(ModifiedTeamModel[] models){
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<models.length; i++){
+			String str = parseModel(models[i]);
+			sb.append(str);
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+	private String parseModel(ModifiedTeamModel model) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("  [ ");
+		sb.append(model.getTeamName());
+		sb.append(": ");
+		sb.append(model.getTeamID());
+		sb.append(": ");
+		sb.append(model.getPhoneNum());
+		sb.append(": \n   ");
+		sb.append(" ]");
+		return sb.toString();
+	}
+
+
 	private void insertPlayer(){
 		JPanel insplayerpane = new JPanel();
 		insplayerpane.setBorder(BorderFactory.createTitledBorder("insert"));
