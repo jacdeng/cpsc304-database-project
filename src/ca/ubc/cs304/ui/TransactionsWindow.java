@@ -11,6 +11,7 @@ import javax.swing.*;
 import ca.ubc.cs304.delegates.TransactionsWindowDelegate;
 import ca.ubc.cs304.model.BranchModel;
 import ca.ubc.cs304.model.FootballPlayerModel;
+import ca.ubc.cs304.model.ModifiedFootballPlayer;
 import ca.ubc.cs304.model.ModifiedTeamModel;
 import com.sun.tools.javac.comp.Flow;
 
@@ -41,8 +42,12 @@ public class TransactionsWindow extends JFrame{
 	private JButton playerUpdateButton;
 	private JButton playerShowButton;
 	private JTextArea playerTable;
+
 	private JTextField arenanametxt;
 	private JTextArea arenaTable;
+
+	private JButton getGOATButton;
+	private JTextArea goattxt;
 
 	// get teams
 	private JButton getteamsButton;
@@ -100,7 +105,7 @@ public class TransactionsWindow extends JFrame{
 		updatePlayer();
 		showPlayerStatic();
 		getteamsforarena();
-		
+		GetGOAT();
 
 		JScrollPane playerscrollpane = new JScrollPane(playerpane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -109,17 +114,82 @@ public class TransactionsWindow extends JFrame{
 
 		contentpane.add(playerscrollpane);
 	}
-	private void getteamsforarena() {
-		// Creating a new panel to store the arena
-		JPanel insplayerpane = new JPanel();
-		insplayerpane.setBorder(BorderFactory.createTitledBorder("get teams"));
+	private void GetGOAT(){
+		// Creating a new panel to store the goat
+		JPanel goatplayerpane = new JPanel();
+		goatplayerpane.setBorder(BorderFactory.createTitledBorder("get GOAT"));
 		GridBagLayout gb = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
-		insplayerpane.setLayout(gb);
+		goatplayerpane.setLayout(gb);
 
 		// Creating the button for the input field
-		JButton insertButton = new JButton("get teams");
-		getteamsButton = insertButton;
+		JButton goatButton = new JButton("get GOAT");
+		getGOATButton = goatButton;
+
+		goattxt = new JTextArea(20,50);
+		goattxt.setEditable(false);
+
+		// place the Textarea
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(10, 10, 5, 10);
+		gb.setConstraints(goattxt, c);
+		goatplayerpane.add(goattxt);
+
+		// place the insert button to submit the form
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(2, 10, 15, 10);
+		c.anchor = GridBagConstraints.CENTER;
+		gb.setConstraints(goatButton, c);
+		goatplayerpane.add(goatButton);
+
+		getGOATButton.addActionListener(new BranchButtonListener());
+
+		// place panel inside playerpane
+		this.c.gridwidth = GridBagConstraints.REMAINDER;
+		this.c.insets = new Insets(0, 2, 0, 2);
+		this.c.anchor = GridBagConstraints.CENTER;
+		this.gb.setConstraints(goatplayerpane, this.c);
+		playerpane.add(goatplayerpane);
+	}
+	private void goatDynamic(ModifiedFootballPlayer[] models){
+		goattxt.setText("");
+		goattxt.append(parsemodplayerTable(models));
+		playerpane.update(goattxt.getGraphics());
+	}
+	private String parsemodplayerTable(ModifiedFootballPlayer[] models){
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<models.length; i++){
+			String str = parsemodplayerModel(models[i]);
+			sb.append(str);
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+	private String parsemodplayerModel(ModifiedFootballPlayer model) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("  [ ");
+		sb.append(model.getFirstName());
+		sb.append(": ");
+		sb.append(model.getLastName());
+		sb.append(": ");
+		sb.append(model.getJerseyNum());
+		sb.append(": ");
+		sb.append(model.getGoalsSaved());
+		sb.append("] \n ");
+		return sb.toString();
+	}
+
+	private void getteamsforarena() {
+		// Creating a new panel to store the arena
+		JPanel getteamforarenapane = new JPanel();
+		getteamforarenapane.setBorder(BorderFactory.createTitledBorder("get teams"));
+		GridBagLayout gb = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		getteamforarenapane.setLayout(gb);
+
+		// Creating the button for the input field
+		JButton team4arenaButton = new JButton("get teams");
+		getteamsButton = team4arenaButton;
 		JLabel arenalbl;
 		arenalbl = new JLabel("enter the arena to search");
 
@@ -129,45 +199,28 @@ public class TransactionsWindow extends JFrame{
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 3, 0);
 		gb.setConstraints(arenalbl, c);
-		insplayerpane.add(arenalbl);
+		getteamforarenapane.add(arenalbl);
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
 		gb.setConstraints(arenanametxt, c);
-		insplayerpane.add(arenanametxt);
+		getteamforarenapane.add(arenanametxt);
 
-		// place the insert button to submit the form
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(2, 10, 15, 10);
-		c.anchor = GridBagConstraints.CENTER;
-		gb.setConstraints(insertButton, c);
-		insplayerpane.add(insertButton);
-
-		// TODO: textarea here
-		arenaTable = new JTextArea(30,50);
+		arenaTable = new JTextArea(20,50);
 		arenaTable.setEditable(false);
 
 		// place the Textarea
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 10, 5, 10);
 		gb.setConstraints(arenaTable, c);
-		insplayerpane.add(arenaTable);
+		getteamforarenapane.add(arenaTable);
 
 		// place the show button
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
-		gb.setConstraints(insertButton, c);
-		insplayerpane.add(insertButton);
-
-		insertButton.addActionListener(new BranchButtonListener());
-
-		// place panel inside playerpane
-		this.c.gridwidth = GridBagConstraints.REMAINDER;
-		this.c.insets = new Insets(0, 2, 0, 2);
-		this.c.anchor = GridBagConstraints.CENTER;
-		this.gb.setConstraints(insplayerpane, this.c);
-		playerpane.add(insplayerpane);
+		gb.setConstraints(team4arenaButton, c);
+		getteamforarenapane.add(team4arenaButton);
 
 		getteamsButton.addActionListener(new BranchButtonListener());
 
@@ -175,26 +228,25 @@ public class TransactionsWindow extends JFrame{
 		this.c.gridwidth = GridBagConstraints.REMAINDER;
 		this.c.insets = new Insets(0, 2, 0, 2);
 		this.c.anchor = GridBagConstraints.CENTER;
-		this.gb.setConstraints(insplayerpane, this.c);
-		playerpane.add(insplayerpane);
+		this.gb.setConstraints(getteamforarenapane, this.c);
+		playerpane.add(getteamforarenapane);
 
 	}
 	private void arenaDynamic(ModifiedTeamModel[] models){
 		arenaTable.setText("");
 		arenaTable.append(parsearenaTable(models));
 		playerpane.update(arenaTable.getGraphics());
-
 	}
 	private String parsearenaTable(ModifiedTeamModel[] models){
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<models.length; i++){
-			String str = parseModel(models[i]);
+			String str = parsearenaModel(models[i]);
 			sb.append(str);
 			sb.append("\n");
 		}
 		return sb.toString();
 	}
-	private String parseModel(ModifiedTeamModel model) {
+	private String parsearenaModel(ModifiedTeamModel model) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("  [ ");
 		sb.append(model.getTeamName());
@@ -1166,10 +1218,14 @@ public class TransactionsWindow extends JFrame{
 
 			}else if (e.getSource() == getteamsButton) {
 
-				String sr = String.format("Getting Teams ");
-				System.out.print(sr);
+				System.out.print("Getting teams ");
 				ModifiedTeamModel[] models = delegate.getteamsforarena(arenanametxt.getText());
 				arenaDynamic(models);
+			}else if (e.getSource() == getGOATButton) {
+
+				System.out.print("Getting goats ");
+				ModifiedFootballPlayer[] models = delegate.GGOAT();
+				goatDynamic(models);
 			}else{
 				System.out.print("ugh something is wrong \n");
 			}
