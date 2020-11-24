@@ -2,6 +2,7 @@ package ca.ubc.cs304.delegates;
 
 import ca.ubc.cs304.model.BranchModel;
 import ca.ubc.cs304.model.FootballPlayerModel;
+import ca.ubc.cs304.model.ModifiedTeamModel;
 
 import java.util.ArrayList;
 
@@ -33,9 +34,9 @@ public interface TransactionsWindowDelegate {
 									 int licenseNum, String contractStart, String contractEnd, int teamID);
 
 	public void getteamNameIDandNum();
-	public ArrayList<FootballPlayerModel> selectteamplayers(int wantedTeamID);
+	public FootballPlayerModel[] selectteamplayers(int wantedTeamID);
 	public void getEligibleSquads();
-	public void getteamsforarena(String city);
+	public ModifiedTeamModel[] getteamsforarena(String city);
 	public void GGOAT();
 
 }

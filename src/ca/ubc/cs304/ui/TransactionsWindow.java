@@ -177,8 +177,6 @@ public class TransactionsWindow extends JFrame{
 		this.gb.setConstraints(insplayerpane, this.c);
 		playerpane.add(insplayerpane);
 
-
-
 	}
 	private void arenaDynamic(ModifiedTeamModel[] models){
 		arenaTable.setText("");
@@ -1167,10 +1165,10 @@ public class TransactionsWindow extends JFrame{
 
 			}else if (e.getSource() == getteamsButton) {
 
-				String sr = String.format("trying to delete player with: \n license num: %d \n", Integer.parseInt(player_dellicensenumtxt.getText()));
+				String sr = String.format("Getting Teams ");
 				System.out.print(sr);
-
-				delegate.deletePlayer(Integer.parseInt(player_dellicensenumtxt.getText()));
+				ModifiedTeamModel[] models = delegate.getteamsforarena(arenanametxt.getText());
+				arenaDynamic(models);
 			}else{
 				System.out.print("ugh something is wrong \n");
 			}

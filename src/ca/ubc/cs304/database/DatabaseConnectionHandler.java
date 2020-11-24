@@ -102,7 +102,7 @@ public class DatabaseConnectionHandler {
 	 *
 	 * PRIO 1
 	 */
-	public ArrayList<FootballPlayerModel> selectteamplayers(int wantedTeamID){
+	public FootballPlayerModel[] selectteamplayers(int wantedTeamID){
 //		// Making new list of football players to output.
 		ArrayList<FootballPlayerModel> result = new ArrayList<FootballPlayerModel>();
 
@@ -162,7 +162,7 @@ public class DatabaseConnectionHandler {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
 		// Return the resulting list of footballplayer models.
-		return result;
+		return result.toArray(new FootballPlayerModel[result.size()]);
 
 	}
 
@@ -248,7 +248,7 @@ public class DatabaseConnectionHandler {
 	 * PRIO 3
 	 */
 
-	public ArrayList<ModifiedTeamModel>getteamsforarena(String city){
+	public ModifiedTeamModel[] getteamsforarena(String city){
 		ArrayList<ModifiedTeamModel> result = new ArrayList<>();
 
 		try {
@@ -290,7 +290,7 @@ public class DatabaseConnectionHandler {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
 		// Return the resulting list of modfiedTeam models.
-		return result;
+		return result.toArray(new ModifiedTeamModel[result.size()]);
 	}
 	/**
 	 * End of Joins Handler
