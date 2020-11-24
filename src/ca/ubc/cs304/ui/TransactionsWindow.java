@@ -52,6 +52,8 @@ public class TransactionsWindow extends JFrame{
 	// get teams
 	private JButton getteamsButton;
 
+	private JButton getPlayersButton;
+
 	//constructor
 	public TransactionsWindow(){ super("Transactions Window");}
 
@@ -106,6 +108,8 @@ public class TransactionsWindow extends JFrame{
 		showPlayerStatic();
 		getteamsforarena();
 		GetGOAT();
+		GetEligsqd();
+		selectTeamPlayers();
 
 		JScrollPane playerscrollpane = new JScrollPane(playerpane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -114,33 +118,87 @@ public class TransactionsWindow extends JFrame{
 
 		contentpane.add(playerscrollpane);
 	}
-	private void GetEligsqd(){
-		// Creating a new panel to store the goat
-		JPanel goatplayerpane = new JPanel();
-		goatplayerpane.setBorder(BorderFactory.createTitledBorder("get GOAT"));
+	private void selectTeamPlayers() {
+		// Creating a new panel to store the arena
+		JPanel selectTeamPlayerpane = new JPanel();
+		selectTeamPlayerpane.setBorder(BorderFactory.createTitledBorder("get players based on teamid"));
 		GridBagLayout gb = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
-		goatplayerpane.setLayout(gb);
+		selectTeamPlayerpane.setLayout(gb);
 
 		// Creating the button for the input field
-		JButton goatButton = new JButton("get GOAT");
+		JButton getPlayersButton = new JButton("get players based on teamid");
+		this.getPlayersButton = getPlayersButton;
+		JLabel playergotlbl;
+		playergotlbl = new JLabel("enter the teamid to search");
+
+		arenanametxt = new JTextField(TEXT_FIELD_WIDTH);
+
+		// place the label for the text field
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 3, 0);
+		gb.setConstraints(playergotlbl, c);
+		selectTeamPlayerpane.add(playergotlbl);
+		// place the text field for the id
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 3, 10);
+		gb.setConstraints(arenanametxt, c);
+		selectTeamPlayerpane.add(arenanametxt);
+
+		arenaTable = new JTextArea(20,80);
+		arenaTable.setEditable(false);
+
+		// place the Textarea
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(10, 10, 5, 10);
+		gb.setConstraints(arenaTable, c);
+		selectTeamPlayerpane.add(arenaTable);
+
+		// place the show button
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(2, 10, 15, 10);
+		c.anchor = GridBagConstraints.CENTER;
+		gb.setConstraints(getPlayersButton, c);
+		selectTeamPlayerpane.add(getPlayersButton);
+
+		getteamsButton.addActionListener(new BranchButtonListener());
+
+		// place panel inside playerpane
+		this.c.gridwidth = GridBagConstraints.REMAINDER;
+		this.c.insets = new Insets(0, 2, 0, 2);
+		this.c.anchor = GridBagConstraints.CENTER;
+		this.gb.setConstraints(selectTeamPlayerpane, this.c);
+		playerpane.add(selectTeamPlayerpane);
+
+	}
+
+	private void GetEligsqd(){
+		// Creating a new panel to store the goat
+		JPanel eligsqdpane = new JPanel();
+		eligsqdpane.setBorder(BorderFactory.createTitledBorder("get eligible squad"));
+		GridBagLayout gb = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		eligsqdpane.setLayout(gb);
+
+		// Creating the button for the input field
+		JButton goatButton = new JButton("get eligible squad");
 		getGOATButton = goatButton;
 
-		goattxt = new JTextArea(20,50);
+		goattxt = new JTextArea(20,80);
 		goattxt.setEditable(false);
 
 		// place the Textarea
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 10, 5, 10);
 		gb.setConstraints(goattxt, c);
-		goatplayerpane.add(goattxt);
+		eligsqdpane.add(goattxt);
 
 		// place the insert button to submit the form
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(2, 10, 15, 10);
 		c.anchor = GridBagConstraints.CENTER;
 		gb.setConstraints(goatButton, c);
-		goatplayerpane.add(goatButton);
+		eligsqdpane.add(goatButton);
 
 		getGOATButton.addActionListener(new BranchButtonListener());
 
@@ -148,8 +206,8 @@ public class TransactionsWindow extends JFrame{
 		this.c.gridwidth = GridBagConstraints.REMAINDER;
 		this.c.insets = new Insets(0, 2, 0, 2);
 		this.c.anchor = GridBagConstraints.CENTER;
-		this.gb.setConstraints(goatplayerpane, this.c);
-		playerpane.add(goatplayerpane);
+		this.gb.setConstraints(eligsqdpane, this.c);
+		playerpane.add(eligsqdpane);
 	}
 	private void GetGOAT(){
 		// Creating a new panel to store the goat
@@ -163,7 +221,7 @@ public class TransactionsWindow extends JFrame{
 		JButton goatButton = new JButton("get GOAT");
 		getGOATButton = goatButton;
 
-		goattxt = new JTextArea(20,50);
+		goattxt = new JTextArea(20,80);
 		goattxt.setEditable(false);
 
 		// place the Textarea
@@ -215,7 +273,6 @@ public class TransactionsWindow extends JFrame{
 		sb.append("] \n ");
 		return sb.toString();
 	}
-
 	private void getteamsforarena() {
 		// Creating a new panel to store the arena
 		JPanel getteamforarenapane = new JPanel();
@@ -243,7 +300,7 @@ public class TransactionsWindow extends JFrame{
 		gb.setConstraints(arenanametxt, c);
 		getteamforarenapane.add(arenanametxt);
 
-		arenaTable = new JTextArea(20,50);
+		arenaTable = new JTextArea(20,80);
 		arenaTable.setEditable(false);
 
 		// place the Textarea
@@ -892,7 +949,7 @@ public class TransactionsWindow extends JFrame{
 
 		JButton showButton = new JButton("show player");
 		playerShowButton = showButton;
-		playerTable = new JTextArea(30,50);
+		playerTable = new JTextArea(30,80);
 		playerTable.setEditable(false);
 
 		// place the Textarea
