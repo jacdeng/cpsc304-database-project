@@ -58,7 +58,6 @@ public class TransactionsWindow extends JFrame{
 
 		ContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
 
-
 		Player();
 
 		// anonymous inner class for closing the window

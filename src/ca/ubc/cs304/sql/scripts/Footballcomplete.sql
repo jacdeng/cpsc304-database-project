@@ -1,5 +1,5 @@
 CREATE TABLE FootballPlayer_PlaysFor (
-    jerseyNum int NOT NUll PRIMARY KEY,
+    jerseyNum int NOT NUll,
     firstName Char (50) NOT NUll, 
     lastName Char(30) NOT NUll,
     nationality char(50) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE FootballPlayer_PlaysFor (
     blocks int, 
     clearances int, 
 
-    licenceNum int, 
+    licenceNum int PRIMARY KEY,
 
     contractStart char(8), 
     contractEnd char (8), 
