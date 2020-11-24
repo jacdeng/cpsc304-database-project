@@ -114,6 +114,43 @@ public class TransactionsWindow extends JFrame{
 
 		contentpane.add(playerscrollpane);
 	}
+	private void GetEligsqd(){
+		// Creating a new panel to store the goat
+		JPanel goatplayerpane = new JPanel();
+		goatplayerpane.setBorder(BorderFactory.createTitledBorder("get GOAT"));
+		GridBagLayout gb = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		goatplayerpane.setLayout(gb);
+
+		// Creating the button for the input field
+		JButton goatButton = new JButton("get GOAT");
+		getGOATButton = goatButton;
+
+		goattxt = new JTextArea(20,50);
+		goattxt.setEditable(false);
+
+		// place the Textarea
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(10, 10, 5, 10);
+		gb.setConstraints(goattxt, c);
+		goatplayerpane.add(goattxt);
+
+		// place the insert button to submit the form
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(2, 10, 15, 10);
+		c.anchor = GridBagConstraints.CENTER;
+		gb.setConstraints(goatButton, c);
+		goatplayerpane.add(goatButton);
+
+		getGOATButton.addActionListener(new BranchButtonListener());
+
+		// place panel inside playerpane
+		this.c.gridwidth = GridBagConstraints.REMAINDER;
+		this.c.insets = new Insets(0, 2, 0, 2);
+		this.c.anchor = GridBagConstraints.CENTER;
+		this.gb.setConstraints(goatplayerpane, this.c);
+		playerpane.add(goatplayerpane);
+	}
 	private void GetGOAT(){
 		// Creating a new panel to store the goat
 		JPanel goatplayerpane = new JPanel();

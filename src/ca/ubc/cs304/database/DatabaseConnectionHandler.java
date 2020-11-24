@@ -171,7 +171,7 @@ public class DatabaseConnectionHandler {
 	 * @return
 	 */
 
-	public ArrayList<ModifiedTeamModel> getEligibleSquads(){
+	public ModifiedTeamModel[] getEligibleSquads(){
 		ArrayList<ModifiedTeamModel> result = new ArrayList<>();
 		try {
 			Statement stmt = connection.createStatement();
@@ -193,7 +193,7 @@ public class DatabaseConnectionHandler {
 		} catch (SQLException e) {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
-		return result;
+		return result.toArray(new ModifiedTeamModel[result.size()]);
 	}
 
 	/**

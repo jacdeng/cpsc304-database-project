@@ -36,7 +36,7 @@ public interface TransactionsWindowDelegate {
 
 	public void getteamNameIDandNum();
 	public FootballPlayerModel[] selectteamplayers(int wantedTeamID);
-	public void getEligibleSquads();
+	public ModifiedTeamModel[] getEligibleSquads();
 	public ModifiedTeamModel[] getteamsforarena(String city);
 	public ModifiedFootballPlayer[] GGOAT();
 
