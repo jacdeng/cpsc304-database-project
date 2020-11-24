@@ -39,7 +39,7 @@ CREATE TABLE Team_HasManages(
 
 CREATE TABLE Arena( 
     arenaName char(50) PRIMARY KEY, 
-    arenaAddressy VARCHAR(20) NOT NULL,
+    arenaAddressy Char(20) NOT NULL,
     surfaceType char(50) NOT NULL, 
     capacity int NOT NULL,
     UNIQUE (arenaAddressy)
