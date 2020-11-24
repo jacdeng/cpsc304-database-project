@@ -52,7 +52,7 @@ public class TransactionsWindow extends JFrame{
 
 	private JButton selectTeamPlayersButton;
 	private JTextField selectPlayerstxt;
-	private JTextArea selectPlayerstxt;
+	private JTextArea selectPlayersTable;
 
 	// get teams
 	private JButton getteamsButton;
@@ -111,7 +111,7 @@ public class TransactionsWindow extends JFrame{
 		showPlayerStatic();
 		GetGOAT();
 		GetEligsqd();
-//		selectTeamPlayers();
+		selectTeamPlayers();
 
 		JScrollPane playerscrollpane = new JScrollPane(playerpane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -130,11 +130,11 @@ public class TransactionsWindow extends JFrame{
 
 		// Creating the button for the input field
 		JButton getPlayersButton = new JButton("get players based on teamid");
-		this.getPlayersButton = getPlayersButton;
+		this.selectTeamPlayersButton = getPlayersButton;
 		JLabel playergotlbl;
 		playergotlbl = new JLabel("enter the teamid to search");
 
-		arenanametxt = new JTextField(TEXT_FIELD_WIDTH);
+		selectPlayerstxt = new JTextField(TEXT_FIELD_WIDTH);
 
 		// place the label for the text field
 		c.gridwidth = GridBagConstraints.RELATIVE;
@@ -144,17 +144,17 @@ public class TransactionsWindow extends JFrame{
 		// place the text field for the id
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(0, 0, 3, 10);
-		gb.setConstraints(arenanametxt, c);
-		selectTeamPlayerpane.add(arenanametxt);
+		gb.setConstraints(selectPlayerstxt, c);
+		selectTeamPlayerpane.add(selectPlayerstxt);
 
-		arenaTable = new JTextArea(20,80);
-		arenaTable.setEditable(false);
+		selectPlayersTable = new JTextArea(20,80);
+		selectPlayersTable.setEditable(false);
 
 		// place the Textarea
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 10, 5, 10);
-		gb.setConstraints(arenaTable, c);
-		selectTeamPlayerpane.add(arenaTable);
+		gb.setConstraints(selectPlayersTable, c);
+		selectTeamPlayerpane.add(selectPlayersTable);
 
 		// place the show button
 		c.gridwidth = GridBagConstraints.REMAINDER;
@@ -163,7 +163,7 @@ public class TransactionsWindow extends JFrame{
 		gb.setConstraints(getPlayersButton, c);
 		selectTeamPlayerpane.add(getPlayersButton);
 
-		getteamsButton.addActionListener(new BranchButtonListener());
+		selectTeamPlayersButton.addActionListener(new BranchButtonListener());
 
 		// place panel inside playerpane
 		this.c.gridwidth = GridBagConstraints.REMAINDER;
@@ -171,6 +171,11 @@ public class TransactionsWindow extends JFrame{
 		this.c.anchor = GridBagConstraints.CENTER;
 		this.gb.setConstraints(selectTeamPlayerpane, this.c);
 		playerpane.add(selectTeamPlayerpane);
+	}
+	private void selectteamplayerDynamic(FootballPlayerModel[] models){
+		selectPlayersTable.setText("");
+		selectPlayersTable.append(parseTable(models));
+		playerpane.update(selectPlayersTable.getGraphics());
 	}
 
 	private void GetEligsqd(){
@@ -1333,6 +1338,10 @@ public class TransactionsWindow extends JFrame{
 				System.out.print("Getting eligible teams with member > 12 ");
 				ModifiedTeamModel[] models = delegate.getEligibleSquads();
 				eligsqddynamic(models);
+			}else if (e.getSource() == selectTeamPlayersButton) {
+				System.out.print("Getting players based on team id");
+				FootballPlayerModel[] models = delegate.selectteamplayers(Integer.parseInt(selectPlayerstxt.getText()));
+				selectteamplayerDynamic(models);
 			}
 			else{
 				System.out.print("ugh something is wrong \n");
