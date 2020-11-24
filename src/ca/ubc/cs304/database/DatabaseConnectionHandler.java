@@ -203,7 +203,7 @@ public class DatabaseConnectionHandler {
 	/**
 	 * Start of Nested Aggregation handler
 	 */
-	public ArrayList<ModifiedFootballPlayer> GGOAT() {
+	public ModifiedFootballPlayer[] GGOAT() {
 //		// Making new list of football players to output.
 		ArrayList<ModifiedFootballPlayer> result = new ArrayList<ModifiedFootballPlayer>();
 
@@ -231,7 +231,7 @@ public class DatabaseConnectionHandler {
 		} catch (SQLException e) {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
-		return result;
+		return result.toArray(new ModifiedFootballPlayer[result.size()]);
 	}
 
 	/**

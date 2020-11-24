@@ -100,6 +100,7 @@ public class TransactionsWindow extends JFrame{
 		updatePlayer();
 		showPlayerStatic();
 		getteamsforarena();
+		
 
 		JScrollPane playerscrollpane = new JScrollPane(playerpane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);

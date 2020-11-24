@@ -2,6 +2,7 @@ package ca.ubc.cs304.delegates;
 
 import ca.ubc.cs304.model.BranchModel;
 import ca.ubc.cs304.model.FootballPlayerModel;
+import ca.ubc.cs304.model.ModifiedFootballPlayer;
 import ca.ubc.cs304.model.ModifiedTeamModel;
 
 import java.util.ArrayList;
@@ -37,6 +38,6 @@ public interface TransactionsWindowDelegate {
 	public FootballPlayerModel[] selectteamplayers(int wantedTeamID);
 	public void getEligibleSquads();
 	public ModifiedTeamModel[] getteamsforarena(String city);
-	public void GGOAT();
+	public ModifiedFootballPlayer[] GGOAT();
 
 }

@@ -64,7 +64,7 @@ public class FootballLeague implements LoginWindowDelegate, TransactionsWindowDe
 	public FootballPlayerModel[] selectteamplayers(int wantedTeamID) {return dbHandler.selectteamplayers( wantedTeamID);};
 	public void getEligibleSquads(){dbHandler.getEligibleSquads();};
 	public ModifiedTeamModel[] getteamsforarena(String city){return dbHandler.getteamsforarena( city);};
-	public void GGOAT(){dbHandler.GGOAT();};
+	public ModifiedFootballPlayer[] GGOAT(){return dbHandler.GGOAT();};
 
 	/**
 	 * End of Special Transactions:
