@@ -1602,7 +1602,7 @@ public class DatabaseConnectionHandler {
 			// creating script runner object with current connection
 			ScriptRunner sr = new ScriptRunner(connection, connection.getAutoCommit(), true);
 			// creating reader object
-			Reader reader = new BufferedReader(new FileReader("src/ca/ubc/cs304/sql/scripts/Football.sql"));
+			Reader reader = new BufferedReader(new FileReader("src/ca/ubc/cs304/sql/scripts/Footballcomplete.sql"));
 			sr.runScript(reader);
 //			Statement stmt = connection.createStatement();
 //			stmt.executeUpdate("CREATE TABLE branch (branch_id integer PRIMARY KEY, branch_name varchar2(20) not null, branch_addr varchar2(50), branch_city varchar2(20) not null, branch_phone integer)");
@@ -1627,9 +1627,11 @@ public class DatabaseConnectionHandler {
 			ResultSet rs = stmt.executeQuery("select table_name from user_tables");
 			
 			while(rs.next()) {
-				if(rs.getString(1).toLowerCase().equals("branch")) {
-					stmt.execute("DROP TABLE branch");
-					break;
+				if(rs.getString(1).toUpperCase().equals("FOOTBALLPLAYER_PLAYSFOR")) {
+					stmt.execute("DROP TABLE FOOTBALLPLAYER_PLAYSFOR");
+				}
+				if(rs.getString(1).toUpperCase().equals("TEAM_HASMANAGES")) {
+					stmt.execute("DROP TABLE TEAM_HASMANAGES");
 				}
 			}
 			

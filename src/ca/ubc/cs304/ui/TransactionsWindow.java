@@ -698,6 +698,7 @@ public class TransactionsWindow extends JFrame{
 		JButton showButton = new JButton("show player");
 		playerShowButton = showButton;
 		playerTable = new JTextArea(10,40);
+		playerTable.setEditable(false);
 
 		// place the Textarea
 		c.gridwidth = GridBagConstraints.REMAINDER;
