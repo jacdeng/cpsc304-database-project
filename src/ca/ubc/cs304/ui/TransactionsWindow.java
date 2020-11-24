@@ -98,8 +98,8 @@ public class TransactionsWindow extends JFrame{
 
 		JScrollPane playerscrollpane = new JScrollPane(playerpane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		playerscrollpane.setMinimumSize(new Dimension(600, 800));
-		playerscrollpane.setPreferredSize(new Dimension(600, 800));
+		playerscrollpane.setMinimumSize(new Dimension(1100, 800));
+		playerscrollpane.setPreferredSize(new Dimension(1100, 800));
 
 		contentpane.add(playerscrollpane);
 	}
@@ -766,7 +766,7 @@ public class TransactionsWindow extends JFrame{
 	}
 	private void showPlayerDynamic(FootballPlayerModel[] models){
 		playerTable.setText("");
-		playerTable.append(" [ license : jerseynum : firstname : lastname : nationality : date of birth : goals conceded : goals saved : big chances : key passes : interceptions : recoveries : successful tackles : blocks : clearances : contract start : contract end : teamID ] \t \n");
+		playerTable.append(" [ license : jerseynum : firstname : lastname : nationality : date of birth : \n   goals conceded : goals saved : big chances : key passes : interceptions : recoveries : successful tackles : blocks : clearances : \n   contract start : contract end : teamID ] \t \n");
 		playerTable.append(parseTable(models));
 		playerpane.update(playerTable.getGraphics());
 
@@ -784,17 +784,17 @@ public class TransactionsWindow extends JFrame{
 		StringBuilder sb = new StringBuilder();
 		sb.append("  [ ");
 		sb.append(model.getLicenseNum());
-		sb.append(" : ");
+		sb.append(": ");
 		sb.append(model.getJerseyNum());
-		sb.append(" : ");
+		sb.append(": ");
 		sb.append(model.getFirstName());
-		sb.append(" : ");
+		sb.append(": ");
 		sb.append(model.getLastName());
-		sb.append(" : ");
+		sb.append(": ");
 		sb.append(model.getNationality());
-		sb.append(" : ");
+		sb.append(": ");
 		sb.append(model.getDateOfBirth());
-		sb.append(" : ");
+		sb.append(": \n   ");
 
 		if(model.getGoalsConceded() == -1){
 			sb.append(" null ");
@@ -861,10 +861,10 @@ public class TransactionsWindow extends JFrame{
 		}
 		if(model.getClearances() == -1){
 			sb.append(" null ");
-			sb.append(" : ");
+			sb.append(" : \n   ");
 		}else{
 			sb.append(model.getClearances());
-			sb.append(" : ");
+			sb.append(" : \n   ");
 		}
 
 		sb.append(model.getContractStart());
