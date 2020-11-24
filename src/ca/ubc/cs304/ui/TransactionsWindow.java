@@ -42,6 +42,9 @@ public class TransactionsWindow extends JFrame{
 	private JTextArea playerTable;
 	private JTextField arenanametxt;
 
+	// get teams
+	private JButton getteamsButton;
+
 	//constructor
 	public TransactionsWindow(){ super("Transactions Window");}
 
@@ -111,6 +114,7 @@ public class TransactionsWindow extends JFrame{
 		insplayerpane.setLayout(gb);
 
 		JButton insertButton = new JButton("get teams");
+		getteamsButton = insertButton;
 		JLabel arenalbl;
 		arenalbl = new JLabel("enter the arena to search");
 
@@ -134,7 +138,9 @@ public class TransactionsWindow extends JFrame{
 		gb.setConstraints(insertButton, c);
 		insplayerpane.add(insertButton);
 
-		insertButton.addActionListener(new BranchButtonListener());
+		// TODO: textarea here
+
+		getteamsButton.addActionListener(new BranchButtonListener());
 
 		// place panel inside playerpane
 		this.c.gridwidth = GridBagConstraints.REMAINDER;
@@ -739,7 +745,7 @@ public class TransactionsWindow extends JFrame{
 
 		JButton showButton = new JButton("show player");
 		playerShowButton = showButton;
-		playerTable = new JTextArea(10,40);
+		playerTable = new JTextArea(30,50);
 		playerTable.setEditable(false);
 
 		// place the Textarea
@@ -1100,8 +1106,13 @@ public class TransactionsWindow extends JFrame{
 						chanc, keypas, inter, recover, succtack, blk, clr, Integer.parseInt(player_uplicensenumtxt.getText()),
 						contractstart, contractend, teamID);
 
-			}
-			else{
+			}else if (e.getSource() == getteamsButton) {
+
+				String sr = String.format("trying to delete player with: \n license num: %d \n", Integer.parseInt(player_dellicensenumtxt.getText()));
+				System.out.print(sr);
+
+				delegate.deletePlayer(Integer.parseInt(player_dellicensenumtxt.getText()));
+			}else{
 				System.out.print("ugh something is wrong \n");
 			}
 		}
